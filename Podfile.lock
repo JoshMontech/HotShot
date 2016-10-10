@@ -1,0 +1,10 @@
+PODS:
+  - CameraManager (3.0.0)
+
+DEPENDENCIES:
+  - CameraManager (~> 3.0)
+
+SPEC CHECKSUMS:
+  CameraManager: 8b92bc0ab51b598d9a4c01998bc9f1efb9b681bf
+
+COCOAPODS: 0.39.0

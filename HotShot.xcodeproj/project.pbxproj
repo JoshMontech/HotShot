@@ -13,9 +13,11 @@
 		31E37E781D9F1EFB00DB93B7 /* HotShot.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 31E37E761D9F1EFB00DB93B7 /* HotShot.xcdatamodeld */; };
 		31E37E7A1D9F1EFB00DB93B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31E37E791D9F1EFB00DB93B7 /* Assets.xcassets */; };
 		31E37E7D1D9F1EFB00DB93B7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31E37E7B1D9F1EFB00DB93B7 /* LaunchScreen.storyboard */; };
+		6E7D66938A15F1BD78B03262 /* Pods_HotShot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC2B0C0F745DB2E9FF2C33C /* Pods_HotShot.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		142D838EBA56A56256358339 /* Pods-HotShot.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HotShot.release.xcconfig"; path = "Pods/Target Support Files/Pods-HotShot/Pods-HotShot.release.xcconfig"; sourceTree = "<group>"; };
 		31E37E6C1D9F1EFB00DB93B7 /* HotShot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HotShot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		31E37E6F1D9F1EFB00DB93B7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		31E37E711D9F1EFB00DB93B7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -24,6 +26,8 @@
 		31E37E791D9F1EFB00DB93B7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		31E37E7C1D9F1EFB00DB93B7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		31E37E7E1D9F1EFB00DB93B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5EE6596B4D0C3F6189011239 /* Pods-HotShot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HotShot.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HotShot/Pods-HotShot.debug.xcconfig"; sourceTree = "<group>"; };
+		FBC2B0C0F745DB2E9FF2C33C /* Pods_HotShot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HotShot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +35,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E7D66938A15F1BD78B03262 /* Pods_HotShot.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0CF9E209493A5994481EBCC7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FBC2B0C0F745DB2E9FF2C33C /* Pods_HotShot.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		31E37E631D9F1EFB00DB93B7 = {
 			isa = PBXGroup;
 			children = (
 				31E37E6E1D9F1EFB00DB93B7 /* HotShot */,
 				31E37E6D1D9F1EFB00DB93B7 /* Products */,
+				4DCDA896D7095A48E6BC41CD /* Pods */,
+				0CF9E209493A5994481EBCC7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,6 +82,15 @@
 			path = HotShot;
 			sourceTree = "<group>";
 		};
+		4DCDA896D7095A48E6BC41CD /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5EE6596B4D0C3F6189011239 /* Pods-HotShot.debug.xcconfig */,
+				142D838EBA56A56256358339 /* Pods-HotShot.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,9 +98,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 31E37E811D9F1EFB00DB93B7 /* Build configuration list for PBXNativeTarget "HotShot" */;
 			buildPhases = (
+				905DDEC34B62634974DA70B0 /* Check Pods Manifest.lock */,
 				31E37E681D9F1EFB00DB93B7 /* Sources */,
 				31E37E691D9F1EFB00DB93B7 /* Frameworks */,
 				31E37E6A1D9F1EFB00DB93B7 /* Resources */,
+				02E8961834E0BAA7690DD640 /* Embed Pods Frameworks */,
+				DD04E10AB4D4970432EF4C82 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -94,11 +121,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = Jerry;
 				TargetAttributes = {
 					31E37E6B1D9F1EFB00DB93B7 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = BFSG8QA8PX;
+						LastSwiftMigration = 0810;
 					};
 				};
 			};
@@ -132,6 +161,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		02E8961834E0BAA7690DD640 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HotShot/Pods-HotShot-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		905DDEC34B62634974DA70B0 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		DD04E10AB4D4970432EF4C82 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HotShot/Pods-HotShot-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		31E37E681D9F1EFB00DB93B7 /* Sources */ = {
@@ -180,8 +257,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -225,8 +304,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -245,29 +326,38 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 		31E37E821D9F1EFB00DB93B7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5EE6596B4D0C3F6189011239 /* Pods-HotShot.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = BFSG8QA8PX;
 				INFOPLIST_FILE = HotShot/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jerrypon.HotShot;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		31E37E831D9F1EFB00DB93B7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 142D838EBA56A56256358339 /* Pods-HotShot.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = BFSG8QA8PX;
 				INFOPLIST_FILE = HotShot/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jerrypon.HotShot;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -290,6 +380,7 @@
 				31E37E831D9F1EFB00DB93B7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

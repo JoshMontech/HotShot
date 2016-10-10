@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "31E37E6B1D9F1EFB00DB93B7"
-               BuildableName = "HotShot.app"
-               BlueprintName = "HotShot"
-               ReferencedContainer = "container:HotShot.xcodeproj">
+               BlueprintIdentifier = "71501F3BD3E89C5E6D7C881B0D5CBD4A"
+               BuildableName = "Pods_HotShot.framework"
+               BlueprintName = "Pods-HotShot"
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -42,16 +42,15 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "31E37E6B1D9F1EFB00DB93B7"
-            BuildableName = "HotShot.app"
-            BlueprintName = "HotShot"
-            ReferencedContainer = "container:HotShot.xcodeproj">
+            BlueprintIdentifier = "71501F3BD3E89C5E6D7C881B0D5CBD4A"
+            BuildableName = "Pods_HotShot.framework"
+            BlueprintName = "Pods-HotShot"
+            ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -61,15 +60,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "31E37E6B1D9F1EFB00DB93B7"
-            BuildableName = "HotShot.app"
-            BlueprintName = "HotShot"
-            ReferencedContainer = "container:HotShot.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
