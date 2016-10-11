@@ -14,19 +14,25 @@ class ViewController: UIViewController {
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var controllView: UIView!
     let cameraManager = CameraManager()
-    let warningMessage = "Please do not interact with application while operating a vehicle."
+    let warningMessage = "Please do not interact with the application while operating a vehicle."
+    
+    var shouldShowWarning = true
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         setupCamera()
-        
-        self.controllView.alpha = 0.5
+        self.controllView.alpha = 0.75
         
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        displayInitialAlert()
-        
+        if shouldShowWarning {
+            displayInitialAlert()
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.isHidden = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,6 +45,8 @@ class ViewController: UIViewController {
         let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alertController.addAction(defaultAction)
         self.present(alertController, animated: true, completion: nil)
+        
+        shouldShowWarning = false
     }
     
     private func setupCamera() {
