@@ -28,14 +28,27 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LUa-1q-85Q">
-                                <rect key="frame" x="-4" y="589" width="383" height="78"/>
+                                <rect key="frame" x="-4" y="567" width="383" height="100"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pUq-dE-7eq">
-                                        <rect key="frame" x="137.5" y="24" width="108" height="30"/>
-                                        <state key="normal" title="Start Recording"/>
+                                        <rect key="frame" x="151.5" y="10" width="80" height="80"/>
+                                        <color key="backgroundColor" red="0.43137254901960786" green="0.71764705882352942" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="80" id="LZF-Gk-TUk"/>
+                                            <constraint firstAttribute="width" constant="80" id="y3S-si-NR5"/>
+                                        </constraints>
+                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="40"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="startRecordingButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Jiu-uQ-XOM"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aJ5-Sh-wPS">
-                                        <rect key="frame" x="321" y="24" width="47" height="30"/>
+                                        <rect key="frame" x="321" y="35" width="47" height="30"/>
                                         <state key="normal" title="Videos"/>
                                         <connections>
                                             <segue destination="O3x-FA-136" kind="show" id="lZ5-4J-TSN"/>
@@ -46,7 +59,7 @@
                                 <constraints>
                                     <constraint firstItem="aJ5-Sh-wPS" firstAttribute="centerY" secondItem="LUa-1q-85Q" secondAttribute="centerY" id="4as-oX-t5S"/>
                                     <constraint firstAttribute="trailing" secondItem="aJ5-Sh-wPS" secondAttribute="trailing" constant="15" id="cgC-UC-wKj"/>
-                                    <constraint firstAttribute="height" constant="78" id="eA7-CT-Rry"/>
+                                    <constraint firstAttribute="height" constant="100" id="eA7-CT-Rry"/>
                                     <constraint firstItem="pUq-dE-7eq" firstAttribute="centerY" secondItem="LUa-1q-85Q" secondAttribute="centerY" id="uXk-Cc-cSG"/>
                                 </constraints>
                             </view>

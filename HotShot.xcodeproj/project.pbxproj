@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3108F8BE1DAD7AC60074DB75 /* VideoTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3108F8BD1DAD7AC60074DB75 /* VideoTableCell.swift */; };
 		315C3E481DAD723500AAEC9D /* VideosTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 315C3E471DAD723500AAEC9D /* VideosTableViewController.swift */; };
+		31C1F8371DADD96F0005BC5B /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C1F8361DADD96F0005BC5B /* Video.swift */; };
 		31E37E701D9F1EFB00DB93B7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E37E6F1D9F1EFB00DB93B7 /* AppDelegate.swift */; };
 		31E37E721D9F1EFB00DB93B7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E37E711D9F1EFB00DB93B7 /* ViewController.swift */; };
 		31E37E751D9F1EFB00DB93B7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31E37E731D9F1EFB00DB93B7 /* Main.storyboard */; };
@@ -22,6 +23,7 @@
 		142D838EBA56A56256358339 /* Pods-HotShot.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HotShot.release.xcconfig"; path = "Pods/Target Support Files/Pods-HotShot/Pods-HotShot.release.xcconfig"; sourceTree = "<group>"; };
 		3108F8BD1DAD7AC60074DB75 /* VideoTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoTableCell.swift; sourceTree = "<group>"; };
 		315C3E471DAD723500AAEC9D /* VideosTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideosTableViewController.swift; sourceTree = "<group>"; };
+		31C1F8361DADD96F0005BC5B /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		31E37E6C1D9F1EFB00DB93B7 /* HotShot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HotShot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		31E37E6F1D9F1EFB00DB93B7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		31E37E711D9F1EFB00DB93B7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 				31E37E7B1D9F1EFB00DB93B7 /* LaunchScreen.storyboard */,
 				31E37E7E1D9F1EFB00DB93B7 /* Info.plist */,
 				31E37E761D9F1EFB00DB93B7 /* HotShot.xcdatamodeld */,
+				31C1F8361DADD96F0005BC5B /* Video.swift */,
 			);
 			path = HotShot;
 			sourceTree = "<group>";
@@ -222,6 +225,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				31E37E721D9F1EFB00DB93B7 /* ViewController.swift in Sources */,
+				31C1F8371DADD96F0005BC5B /* Video.swift in Sources */,
 				31E37E701D9F1EFB00DB93B7 /* AppDelegate.swift in Sources */,
 				3108F8BE1DAD7AC60074DB75 /* VideoTableCell.swift in Sources */,
 				31E37E781D9F1EFB00DB93B7 /* HotShot.xcdatamodeld in Sources */,
