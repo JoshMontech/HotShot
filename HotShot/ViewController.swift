@@ -10,15 +10,15 @@ import UIKit
 import CameraManager
 import RealmSwift
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, FileManagerDelegate {
 
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var controllView: UIView!
     let cameraManager = CameraManager()
     let warningMessage = "Please do not interact with the application while operating a vehicle."
-    let greenRecordingColor = UIColor(red: 110/255, green: 183/255, blue: 108/255, alpha:1.00)
     let burntOrange = UIColor(red: 191/255, green: 87/255, blue: 0, alpha: 1)
     let realm = try! Realm()
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     var shouldShowWarning = true
     
@@ -27,7 +27,6 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         setupCamera()
         self.controllView.alpha = 0.75
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -44,25 +43,70 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
 
     @IBAction func startRecordingButtonPressed(_ sender: UIButton) {
+        let documentDir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+        
+        var toBeDeletedVideosUrls = [String]()
+        
         sender.isSelected = !sender.isSelected
 //        sender.setTitle(" ", for: UIControlState.selected)
 //        sender.titleLabel?.text = sender.isSelected ? "Stop Recording" : "Start Recording"
-        sender.backgroundColor = sender.isSelected ? UIColor.red : greenRecordingColor
+        sender.backgroundColor = sender.isSelected ? UIColor.red : UIColor.green
         
+        // start recording
         if sender.isSelected {
             DispatchQueue.global(qos: .background).async {
                 autoreleasepool{
                     let realm = try! Realm()
                     let videos = realm.objects(Video.self).sorted(byProperty: "date")
-                    print(videos.count)
-                    print(videos[0].date)
-                    print(videos[1].date)
+                    let maxClips = self.appDelegate.savedClipsNumber
+                    let numSavedVids = videos.count
+                    
+                    do {
+                        try print(FileManager().contentsOfDirectory(atPath: documentDir))
+                    }
+                    catch let error {
+                        NSLog(error.localizedDescription)
+                    }
+                    // remove oldest saved videos
+                    if maxClips <= numSavedVids {
+                        for i in 0...numSavedVids - maxClips {
+                            toBeDeletedVideosUrls.append(videos[i].urlString)
+                        }
+                        
+                        for url in toBeDeletedVideosUrls {
+                            let videoFile = FileHandle(forReadingAtPath: url)
+                            do {
+                                videoFile?.closeFile()
+                                try FileManager.default.removeItem(atPath: url)
+                                try! realm.write {
+                                    let predicate = NSPredicate(format: "urlString = %@", url)
+                                    let vid = realm.objects(Video.self).filter(predicate)
+                                    realm.delete(vid)
+                                    
+                                }
+                            }
+                            catch let error {
+                                print("There was a problem deleting the video")
+                                NSLog(error.localizedDescription)
+                            }
+                        }
+                    }
+                    
+                    do {
+                        try print(FileManager().contentsOfDirectory(atPath: documentDir))
+                    }
+                    catch let error {
+                        NSLog(error.localizedDescription)
+                    }
                 }
             }
             cameraManager.startRecordingVideo()
-        } else {
+        }
+        // stop recording
+        else {
             cameraManager.stopVideoRecording({ (videoURL, error) -> Void in
                 if let errorOccured = error {
                     self.cameraManager.showErrorBlock("Error occurred", errorOccured.localizedDescription)
@@ -73,12 +117,11 @@ class ViewController: UIViewController {
                     dateFormatter.locale = Locale(identifier: "US_en")
                     dateFormatter.dateFormat = "MMMddyyyy-HHmmss"
                     let dateString = dateFormatter.string(from: date)
-                    let documentDir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] 
-                    let savedDocPath = "file:///private\(documentDir)/\(dateString).mp4"
+                    let savedDocPath = "\(documentDir)/\(dateString).mp4"
                     
 //                    print(FileManager().contentsOfDirectory(atPath: documentDir))
                     
-                    if let savedDocURL = URL(string: savedDocPath) {
+                    if let savedDocURL = URL(string: "file:///private\(savedDocPath)") {
                         do {
                             try FileManager.default.copyItem(at: videoURL!, to: savedDocURL)
                             let newVideo = Video()
@@ -89,9 +132,9 @@ class ViewController: UIViewController {
                             }
                             
                         }
-                        catch let problem {
-                            print("THERE WAS A PROBLEM")
-                            NSLog(problem.localizedDescription)
+                        catch let error {
+                            print("There was a problem saving the video")
+                            NSLog(error.localizedDescription)
                         }
                     }
                     
