@@ -111,7 +111,6 @@ class ViewController: UIViewController, FileManagerDelegate {
                         do {
                             try FileManager.default.copyItem(at: videoURL!, to: savedDocURL)
                             let newVideo = Video()
-                            newVideo.urlString = savedDocPath
                             newVideo.fileName = vidFileName
                             newVideo.date = date as NSDate
                             try! self.realm.write {

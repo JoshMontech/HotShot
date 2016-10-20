@@ -9,7 +9,6 @@
 import RealmSwift
 
 class Video: Object {
-    dynamic var urlString = ""
     dynamic var fileName = ""
     dynamic var date = NSDate()
 }
