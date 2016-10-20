@@ -13,4 +13,5 @@ class VideosTableViewController: UITableViewController {
     override func viewDidLoad() {
         self.navigationController?.navigationBar.isHidden = false
     }
+    
 }
