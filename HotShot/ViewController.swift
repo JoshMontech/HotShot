@@ -48,8 +48,6 @@ class ViewController: UIViewController, FileManagerDelegate {
     @IBAction func startRecordingButtonPressed(_ sender: UIButton) {
         let documentDir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
         
-        var toBeDeletedVideosUrls = [String]()
-        
         sender.isSelected = !sender.isSelected
 //        sender.setTitle(" ", for: UIControlState.selected)
 //        sender.titleLabel?.text = sender.isSelected ? "Stop Recording" : "Start Recording"
@@ -64,28 +62,22 @@ class ViewController: UIViewController, FileManagerDelegate {
                     let maxClips = self.appDelegate.savedClipsNumber
                     let numSavedVids = videos.count
                     
-                    do {
-                        try print(FileManager().contentsOfDirectory(atPath: documentDir))
-                    }
-                    catch let error {
-                        NSLog(error.localizedDescription)
-                    }
+                    
                     // remove oldest saved videos
                     if maxClips <= numSavedVids {
+                        var toBeDeletedVideos = [Video]()
                         for i in 0...numSavedVids - maxClips {
-                            toBeDeletedVideosUrls.append(videos[i].urlString)
+                            toBeDeletedVideos.append(videos[i])
                         }
                         
-                        for url in toBeDeletedVideosUrls {
-                            let videoFile = FileHandle(forReadingAtPath: url)
+                        for video in toBeDeletedVideos {
                             do {
-                                videoFile?.closeFile()
-                                try FileManager.default.removeItem(atPath: url)
+                                let vidUrl = "\(documentDir)/\(video.fileName)"
+                                try FileManager.default.removeItem(atPath: vidUrl)
                                 try! realm.write {
-                                    let predicate = NSPredicate(format: "urlString = %@", url)
-                                    let vid = realm.objects(Video.self).filter(predicate)
-                                    realm.delete(vid)
-                                    
+//                                    let predicate = NSPredicate(format: "urlString = %@", url)
+//                                    let vid = realm.objects(Video.self).filter(predicate)
+                                    realm.delete(video)
                                 }
                             }
                             catch let error {
@@ -93,13 +85,6 @@ class ViewController: UIViewController, FileManagerDelegate {
                                 NSLog(error.localizedDescription)
                             }
                         }
-                    }
-                    
-                    do {
-                        try print(FileManager().contentsOfDirectory(atPath: documentDir))
-                    }
-                    catch let error {
-                        NSLog(error.localizedDescription)
                     }
                 }
             }
@@ -118,6 +103,7 @@ class ViewController: UIViewController, FileManagerDelegate {
                     dateFormatter.dateFormat = "MMMddyyyy-HHmmss"
                     let dateString = dateFormatter.string(from: date)
                     let savedDocPath = "\(documentDir)/\(dateString).mp4"
+                    let vidFileName = "\(dateString).mp4"
                     
 //                    print(FileManager().contentsOfDirectory(atPath: documentDir))
                     
@@ -125,7 +111,7 @@ class ViewController: UIViewController, FileManagerDelegate {
                         do {
                             try FileManager.default.copyItem(at: videoURL!, to: savedDocURL)
                             let newVideo = Video()
-                            newVideo.urlString = savedDocPath
+                            newVideo.fileName = vidFileName
                             newVideo.date = date as NSDate
                             try! self.realm.write {
                                 self.realm.add(newVideo)
