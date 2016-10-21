@@ -17,4 +17,4 @@ Jerry Pon (40%)
 * Add user defaults for tracking the user settings
 
 Deviations:
-* 
+Due to limited time and our lack of experience in iOS and its filesystem, storing and removing the videos took longer than we anticipated. Therefore, video playback and clip length settings are both pushed back to beta release. Video recording, however, is now working and the app now automatically deletes the clips when a new recording is started and the number of temp clips matches the max saved clips settings. We also could not implement settings in time for the user, so we currently just set the app to be just save a single clip.
