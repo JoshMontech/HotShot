@@ -56,4 +56,5 @@ class VideosTableViewController: UITableViewController {
         //once videos are working properly, will have more sophisticated handling
         return 4 //fix
     }
+    
 }

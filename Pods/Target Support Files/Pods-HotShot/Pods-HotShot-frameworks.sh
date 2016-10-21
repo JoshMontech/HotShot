@@ -85,7 +85,11 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-HotShot/CameraManager.framework"
+  install_framework "Pods-HotShot/Realm.framework"
+  install_framework "Pods-HotShot/RealmSwift.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-HotShot/CameraManager.framework"
+  install_framework "Pods-HotShot/Realm.framework"
+  install_framework "Pods-HotShot/RealmSwift.framework"
 fi

@@ -13,10 +13,44 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    // MARK: User Defaults init
+    let defaults = UserDefaults.standard
+    
+    // MARK: Keys
+    fileprivate let kFirstTimeLaunchKey = "firstAppLaunch"
+    fileprivate let kClipLengthKey = "clipLengthInMinutes"
+    fileprivate let kSavedClipsNumberKey = "savedClipsNumber"
+    
+    // MARK: Properties
+    var clipLength: Double {
+        get {
+            return defaults.double(forKey: kClipLengthKey)
+        }
+        set (newVal) {
+            defaults.set(newVal, forKey: kClipLengthKey)
+            defaults.synchronize()
+        }
+    }
+    
+    var savedClipsNumber: Int {
+        get {
+            return defaults.integer(forKey: kSavedClipsNumberKey)
+        }
+        set (newVal) {
+            defaults.set(newVal, forKey: kSavedClipsNumberKey)
+            defaults.synchronize()
+        }
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        // MARK: Set user defautls
+        // check if it's the first app launch
+        if !defaults.bool(forKey: kFirstTimeLaunchKey) {
+            defaults.set(true, forKey: kFirstTimeLaunchKey)
+            defaults.set(2.0, forKey: kClipLengthKey)
+            defaults.set(1, forKey: kSavedClipsNumberKey)
+            defaults.synchronize()
+        }
         return true
     }
 

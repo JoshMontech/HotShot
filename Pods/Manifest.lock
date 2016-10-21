@@ -1,10 +1,18 @@
 PODS:
   - CameraManager (3.0.0)
+  - Realm (2.0.2):
+    - Realm/Headers (= 2.0.2)
+  - Realm/Headers (2.0.2)
+  - RealmSwift (2.0.2):
+    - Realm (= 2.0.2)
 
 DEPENDENCIES:
   - CameraManager (~> 3.0)
+  - RealmSwift
 
 SPEC CHECKSUMS:
   CameraManager: 8b92bc0ab51b598d9a4c01998bc9f1efb9b681bf
+  Realm: 0f5a194af0b7e6158b83db41b4ee1a00be7ddf1a
+  RealmSwift: 0eb5070d851cba7c66e841ca756d83609dc78bc8
 
 COCOAPODS: 0.39.0
