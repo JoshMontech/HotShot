@@ -295,11 +295,11 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MXF-38-rCv" id="W9o-sQ-lmP">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="JDI-kZ-zHH">
-                                            <rect key="frame" x="15" y="0.0" width="345" height="43"/>
+                                            <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -319,7 +319,7 @@
             </objects>
             <point key="canvasLocation" x="1074" y="900"/>
         </scene>
-        <!--Videos Table View Controller-->
+        <!--Videos-->
         <scene sceneID="hFa-X4-JRb">
             <objects>
                 <tableViewController id="O3x-FA-136" customClass="VideosTableViewController" customModule="HotShot" customModuleProvider="target" sceneMemberID="viewController">
@@ -332,27 +332,27 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ysb-Sl-mDP" id="SBm-xV-kWg">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1N8-ZY-BQn">
-                                            <rect key="frame" x="289" y="-1" width="78" height="44"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" secondItem="1N8-ZY-BQn" secondAttribute="height" multiplier="39:22" id="kep-bU-MuW"/>
-                                            </constraints>
-                                        </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9SC-BA-mTt">
                                             <rect key="frame" x="8" y="11" width="273" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1N8-ZY-BQn">
+                                            <rect key="frame" x="323" y="0.0" width="44" height="44"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="1N8-ZY-BQn" secondAttribute="height" multiplier="39:22" constant="-34" id="kep-bU-MuW"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="1N8-ZY-BQn" firstAttribute="leading" secondItem="9SC-BA-mTt" secondAttribute="trailing" constant="8" id="4uT-aa-buH"/>
+                                        <constraint firstItem="1N8-ZY-BQn" firstAttribute="leading" secondItem="9SC-BA-mTt" secondAttribute="trailing" constant="42" id="4uT-aa-buH"/>
                                         <constraint firstAttribute="leadingMargin" secondItem="9SC-BA-mTt" secondAttribute="leading" id="Hsj-0U-HvM"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="1N8-ZY-BQn" secondAttribute="bottom" constant="-7.5" id="WyT-Y8-b5W"/>
-                                        <constraint firstItem="1N8-ZY-BQn" firstAttribute="top" secondItem="SBm-xV-kWg" secondAttribute="topMargin" constant="-9" id="lkH-gR-z3A"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="1N8-ZY-BQn" secondAttribute="bottom" constant="-8.5" id="WyT-Y8-b5W"/>
+                                        <constraint firstItem="1N8-ZY-BQn" firstAttribute="top" secondItem="SBm-xV-kWg" secondAttribute="topMargin" constant="-8" id="lkH-gR-z3A"/>
                                         <constraint firstItem="9SC-BA-mTt" firstAttribute="centerY" secondItem="SBm-xV-kWg" secondAttribute="centerY" id="quV-RO-Pzo"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="1N8-ZY-BQn" secondAttribute="trailing" id="zN2-DK-adN"/>
                                     </constraints>
@@ -368,6 +368,7 @@
                             <outlet property="delegate" destination="O3x-FA-136" id="Flo-f6-2Ag"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Videos" id="S9c-4h-Wf4"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Izz-bi-PKM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
