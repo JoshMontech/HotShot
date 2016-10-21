@@ -32,7 +32,7 @@ class VideosTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "videoPreviewCell", for: indexPath) as! VideoTableCell
         cell.videoNameLabel.text = "derp" //fix
-        cell.videoPreviewThumbnail.image = nil //fix
+        cell.videoPreviewThumbnail.image = #imageLiteral(resourceName: "flame") //fix
         return cell
     }
     
@@ -47,7 +47,8 @@ class VideosTableViewController: UITableViewController {
         } else {
             print("derp")
         }
-        
+
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     //helper functions
