@@ -12,10 +12,9 @@ class SettingsTableViewController: UITableViewController {
     let standardCellIdentifier = "SettingsStandardCell"
     let logOutCellIdentifier = "SettingsLogoutCell"
     let switchCellIdentifier = "SettingsSwitchCell"
-    let segmentedControlCellIdentifier = "SettingsSegmentedCell"
     
     enum CellTypes {
-        case standardCell, switchCell, segmentedControlCell, logoutCell
+        case standardCell, switchCell, logoutCell
     }
     
     enum Sections: Int {
@@ -56,7 +55,7 @@ class SettingsTableViewController: UITableViewController {
     }
     
     enum AccountSettings: Int {
-        case email = 0, passWord, firstName, lastName, cloud
+        case email = 0, password, firstName, lastName, cloud
         
         var cellType: CellTypes {
             switch self {
@@ -68,7 +67,7 @@ class SettingsTableViewController: UITableViewController {
                 return CellTypes.standardCell
             case .lastName:
                 return CellTypes.standardCell
-            case .passWord:
+            case .password:
                 return CellTypes.standardCell
             }
         }
@@ -85,7 +84,7 @@ class SettingsTableViewController: UITableViewController {
     }
     
     enum RecordSettings: Int {
-        case lengthOfClip = 0, numberOfClipsSaved, travelingSpeedUnit, speed, autoRecord
+        case video = 0, travelingSpeedUnit, speed, autoRecord
         
         static let count: Int = {
             var max = 0
@@ -101,14 +100,12 @@ class SettingsTableViewController: UITableViewController {
             switch self {
             case .autoRecord:
                 return CellTypes.switchCell
-            case .lengthOfClip:
-                return CellTypes.segmentedControlCell
-            case .numberOfClipsSaved:
-                return CellTypes.segmentedControlCell
+            case .video:
+                return CellTypes.standardCell
             case .speed:
                 return CellTypes.switchCell
             case .travelingSpeedUnit:
-                return CellTypes.segmentedControlCell
+                return CellTypes.standardCell
             }
         }
         
@@ -194,44 +191,23 @@ class SettingsTableViewController: UITableViewController {
         case (Sections.account.rawValue, AccountSettings.email.rawValue):
             cell = self.getCell(cellType: .standardCell)
             cell.textLabel!.text = "Email"
-        case (Sections.account.rawValue, AccountSettings.passWord.rawValue):
+        case (Sections.account.rawValue, AccountSettings.password.rawValue):
             cell = self.getCell(cellType: .standardCell)
-            cell.textLabel!.text = "Password"
+            cell.textLabel!.text = "password"
         case (Sections.recording.rawValue, RecordSettings.autoRecord.rawValue):
             let switchCell = self.getCell(cellType: .switchCell) as! SettingsSwitchTableCell
             switchCell.titleLabel.text = "Auto Record"
             cell = switchCell
         case (Sections.recording.rawValue, RecordSettings.speed.rawValue):
             let switchCell = self.getCell(cellType: .switchCell) as! SettingsSwitchTableCell
-            switchCell.titleLabel.text = "Speed"
+            switchCell.titleLabel.text = "Speed Watermark"
             cell = switchCell
         case (Sections.recording.rawValue, RecordSettings.travelingSpeedUnit.rawValue):
-            let segmentedCell = self.getCell(cellType: .segmentedControlCell) as! SettingsSegmentedControlTableCell
-            segmentedCell.titleLabel.text = "Speed Unit"
-            cell = segmentedCell
-        case (Sections.recording.rawValue, RecordSettings.numberOfClipsSaved.rawValue):
-            let segmentedCell = self.getCell(cellType: .segmentedControlCell) as! SettingsSegmentedControlTableCell
-            segmentedCell.titleLabel.text = "Number of Clips Saved"
-            cell = segmentedCell
-        case (Sections.recording.rawValue, RecordSettings.lengthOfClip.rawValue):
-            let segmentedCell = self.getCell(cellType: .segmentedControlCell) as! SettingsSegmentedControlTableCell
-            let lengthOptions = VideoLengthOptions.self
-            let newSegmentWidth = segmentedCell.settingsSegmentedControl.widthForSegment(at: 0) * 0.6
-            print(segmentedCell.settingsSegmentedControl.widthForSegment(at: 0))
-            print(newSegmentWidth)
-            segmentedCell.settingsSegmentedControl.setTitle(lengthOptions.thirtySeconds.description, forSegmentAt: lengthOptions.thirtySeconds.rawValue)
-            segmentedCell.settingsSegmentedControl.setTitle(lengthOptions.twoMinutes.description, forSegmentAt: lengthOptions.twoMinutes.rawValue)
-            segmentedCell.settingsSegmentedControl.insertSegment(withTitle: lengthOptions.threeMinutes.description, at: lengthOptions.threeMinutes.rawValue, animated: false)
-            segmentedCell.settingsSegmentedControl.insertSegment(withTitle: lengthOptions.fiveMinutes.description, at: lengthOptions.fiveMinutes.rawValue, animated: false)
-            segmentedCell.settingsSegmentedControl.insertSegment(withTitle: lengthOptions.tenMinutes.description, at: lengthOptions.tenMinutes.rawValue, animated: false)
-            
-            for i in 0 ..< segmentedCell.settingsSegmentedControl.numberOfSegments {
-                segmentedCell.settingsSegmentedControl.setWidth(newSegmentWidth, forSegmentAt: i)
-            }
-            
-            
-            segmentedCell.titleLabel.text = "Video Length"
-            cell = segmentedCell
+            cell = self.getCell(cellType: .standardCell)
+            cell.textLabel?.text = "Speed Unit"
+        case (Sections.recording.rawValue, RecordSettings.video.rawValue):
+            cell = self.getCell(cellType: .standardCell)
+            cell.textLabel?.text = "Video"
         case (Sections.logout.rawValue, 0):
             let logoutCell = self.getCell(cellType: .logoutCell) as! SettingsLogoutTableCell
             logoutCell.logoutLabel.textColor = UIColor.red
@@ -251,8 +227,6 @@ class SettingsTableViewController: UITableViewController {
             return tableView.dequeueReusableCell(withIdentifier: standardCellIdentifier)!
         case .logoutCell:
             return tableView.dequeueReusableCell(withIdentifier: logOutCellIdentifier)!
-        case .segmentedControlCell:
-            return tableView.dequeueReusableCell(withIdentifier: segmentedControlCellIdentifier)!
         case .switchCell:
             return tableView.dequeueReusableCell(withIdentifier: switchCellIdentifier)!
         }

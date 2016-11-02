@@ -16,7 +16,6 @@ class ViewController: UIViewController, FileManagerDelegate {
     @IBOutlet weak var controllView: UIView!
     let cameraManager = CameraManager()
     let warningMessage = "Please do not interact with the application while operating a vehicle."
-    let burntOrange = UIColor(red: 191/255, green: 87/255, blue: 0, alpha: 1)
     let realm = try! Realm()
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     

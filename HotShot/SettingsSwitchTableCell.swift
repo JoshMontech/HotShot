@@ -16,14 +16,4 @@ class SettingsSwitchTableCell: UITableViewCell {
     @IBAction func switchValueChanged(_ sender: UISwitch) {
     }
     
-//    override init (style: UITableViewCellStyle, reuseIdentifier: String?) {
-//        super.init(style: style, reuseIdentifier: reuseIdentifier)
-////        self.contentView
-////        325
-//    }
-//    
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-    
 }

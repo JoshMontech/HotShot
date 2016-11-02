@@ -51,6 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             defaults.set(1, forKey: kSavedClipsNumberKey)
             defaults.synchronize()
         }
+        
         return true
     }
 
