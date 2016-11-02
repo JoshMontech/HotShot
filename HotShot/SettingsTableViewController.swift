@@ -8,18 +8,23 @@
 
 import UIKit
 
-var lst = ["jake", "seth"]
-
 class SettingsTableViewController: UITableViewController {
-    var textCellIdentifier = "SettingsCell"
+    let standardCellIdentifier = "SettingsStandardCell"
+    let logOutCellIdentifier = "SettingsLogoutCell"
+    let switchCellIdentifier = "SettingsSwitchCell"
+    let segmentedControlCellIdentifier = "SettingsSegmentedCell"
     
-    enum sections: Int {
-        case recording = 0, general, account
+    enum CellTypes {
+        case standardCell, switchCell, segmentedControlCell, logoutCell
+    }
+    
+    enum Sections: Int {
+        case recording = 0, general, account, logout
         
         static let count: Int = {
             var max = 0
             
-            while sections(rawValue: max) != nil {
+            while Sections(rawValue: max) != nil {
                 max += 1
             }
             
@@ -27,27 +32,22 @@ class SettingsTableViewController: UITableViewController {
         }()
     }
     
-    enum generalSettings: Int {
+    enum GeneralSettings: Int {
         case powerSaving = 0, about
         
-        static let count: Int = {
-            var max = 0
-            
-            while generalSettings(rawValue: max) != nil {
-                max += 1
+        var cellType: CellTypes {
+            switch self {
+            case .powerSaving:
+                return CellTypes.switchCell
+            case .about:
+                return CellTypes.standardCell
             }
-            
-            return max
-        }()
-    }
-    
-    enum accountSettings: Int {
-        case email = 0, passWord, username, firstName, lastName, cloud, logOut
+        }
         
         static let count: Int = {
             var max = 0
             
-            while accountSettings(rawValue: max) != nil {
+            while GeneralSettings(rawValue: max) != nil {
                 max += 1
             }
             
@@ -55,18 +55,63 @@ class SettingsTableViewController: UITableViewController {
         }()
     }
     
-    enum recordSettings: Int {
+    enum AccountSettings: Int {
+        case email = 0, passWord, firstName, lastName, cloud
+        
+        var cellType: CellTypes {
+            switch self {
+            case .cloud:
+                return CellTypes.standardCell
+            case .email:
+                return CellTypes.standardCell
+            case .firstName:
+                return CellTypes.standardCell
+            case .lastName:
+                return CellTypes.standardCell
+            case .passWord:
+                return CellTypes.standardCell
+            }
+        }
+        
+        static let count: Int = {
+            var max = 0
+            
+            while AccountSettings(rawValue: max) != nil {
+                max += 1
+            }
+            
+            return max
+        }()
+    }
+    
+    enum RecordSettings: Int {
         case lengthOfClip = 0, numberOfClipsSaved, travelingSpeedUnit, speed, autoRecord
         
         static let count: Int = {
             var max = 0
             
-            while recordSettings(rawValue: max) != nil {
+            while RecordSettings(rawValue: max) != nil {
                 max += 1
             }
             
             return max
         }()
+        
+        var cellType: CellTypes {
+            switch self {
+            case .autoRecord:
+                return CellTypes.switchCell
+            case .lengthOfClip:
+                return CellTypes.segmentedControlCell
+            case .numberOfClipsSaved:
+                return CellTypes.segmentedControlCell
+            case .speed:
+                return CellTypes.switchCell
+            case .travelingSpeedUnit:
+                return CellTypes.segmentedControlCell
+            }
+        }
+        
     }
     
     override func viewDidLoad() {
@@ -87,20 +132,22 @@ class SettingsTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return sections.count
+        // #warning Incomplete implementation, return the number of Sections
+        return Sections.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         
         switch section {
-        case sections.general.rawValue:
-            return generalSettings.count
-        case sections.account.rawValue:
-            return accountSettings.count
-        case sections.recording.rawValue:
-            return recordSettings.count
+        case Sections.general.rawValue:
+            return GeneralSettings.count
+        case Sections.account.rawValue:
+            return AccountSettings.count
+        case Sections.recording.rawValue:
+            return RecordSettings.count
+        case Sections.logout.rawValue:
+            return 1
         default:
             return 0
         }
@@ -108,11 +155,11 @@ class SettingsTableViewController: UITableViewController {
     }
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-        case sections.account.rawValue:
+        case Sections.account.rawValue:
             return "Account"
-        case sections.general.rawValue:
+        case Sections.general.rawValue:
             return "General"
-        case sections.recording.rawValue:
+        case Sections.recording.rawValue:
             return "Recording"
         default:
             return ""
@@ -123,102 +170,92 @@ class SettingsTableViewController: UITableViewController {
 //    override func tableView
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier)
+        var cell: UITableViewCell
+        
         let indexValue = (indexPath.section, indexPath.row)
-//        let person = lst[indexPath.row]
-//        
-//        cell!.detailTextLabel!.text = "party"
-//        cell!.textLabel!.text = person
-//        
-//
+        
         switch indexValue {
-        case (sections.general.rawValue, generalSettings.powerSaving.rawValue):
-            cell!.textLabel!.text = "Power Saving Mode"
-        case (sections.general.rawValue, generalSettings.about.rawValue):
-            cell!.textLabel!.text = "About"
-        case (sections.account.rawValue, accountSettings.cloud.rawValue):
-            cell!.textLabel!.text = "Cloud"
-        case (sections.account.rawValue, accountSettings.username.rawValue):
-            cell!.textLabel!.text = "Username"
-        case (sections.account.rawValue, accountSettings.firstName.rawValue):
-            cell!.textLabel!.text = "First Name"
-        case (sections.account.rawValue, accountSettings.lastName.rawValue):
-            cell!.textLabel!.text = "Last Name"
-        case (sections.account.rawValue, accountSettings.email.rawValue):
-            cell!.textLabel!.text = "Email"
-        case (sections.account.rawValue, accountSettings.logOut.rawValue):
-            cell!.textLabel!.text = "Log Out"
-        case (sections.account.rawValue, accountSettings.passWord.rawValue):
-            cell!.textLabel!.text = "Password"
-        case (sections.recording.rawValue, recordSettings.autoRecord.rawValue):
-            cell!.textLabel!.text = "Auto Record"
-        case (sections.recording.rawValue, recordSettings.speed.rawValue):
-            cell!.textLabel!.text = "Speed"
-        case (sections.recording.rawValue, recordSettings.travelingSpeedUnit.rawValue):
-            cell!.textLabel!.text = "Speed Unit"
-        case (sections.recording.rawValue, recordSettings.numberOfClipsSaved.rawValue):
-            cell!.textLabel!.text = "Number of Clips Saved"
-        case (sections.recording.rawValue, recordSettings.lengthOfClip.rawValue):
-            cell!.textLabel!.text = "Video Length"
+        case (Sections.general.rawValue, GeneralSettings.powerSaving.rawValue):
+            let switchCell = self.getCell(cellType: .switchCell) as! SettingsSwitchTableCell
+            switchCell.titleLabel.text = "Power Saving Mode"
+            cell = switchCell
+        case (Sections.general.rawValue, GeneralSettings.about.rawValue):
+            cell = self.getCell(cellType: .standardCell)
+            cell.textLabel!.text = "About"
+        case (Sections.account.rawValue, AccountSettings.cloud.rawValue):
+            cell = self.getCell(cellType: .standardCell)
+            cell.textLabel!.text = "Cloud"
+        case (Sections.account.rawValue, AccountSettings.firstName.rawValue):
+            cell = self.getCell(cellType: .standardCell)
+            cell.textLabel!.text = "First Name"
+        case (Sections.account.rawValue, AccountSettings.lastName.rawValue):
+            cell = self.getCell(cellType: .standardCell)
+            cell.textLabel!.text = "Second Name"
+        case (Sections.account.rawValue, AccountSettings.email.rawValue):
+            cell = self.getCell(cellType: .standardCell)
+            cell.textLabel!.text = "Email"
+        case (Sections.account.rawValue, AccountSettings.passWord.rawValue):
+            cell = self.getCell(cellType: .standardCell)
+            cell.textLabel!.text = "Password"
+        case (Sections.recording.rawValue, RecordSettings.autoRecord.rawValue):
+            let switchCell = self.getCell(cellType: .switchCell) as! SettingsSwitchTableCell
+            switchCell.titleLabel.text = "Auto Record"
+            cell = switchCell
+        case (Sections.recording.rawValue, RecordSettings.speed.rawValue):
+            let switchCell = self.getCell(cellType: .switchCell) as! SettingsSwitchTableCell
+            switchCell.titleLabel.text = "Speed"
+            cell = switchCell
+        case (Sections.recording.rawValue, RecordSettings.travelingSpeedUnit.rawValue):
+            let segmentedCell = self.getCell(cellType: .segmentedControlCell) as! SettingsSegmentedControlTableCell
+            segmentedCell.titleLabel.text = "Speed Unit"
+            cell = segmentedCell
+        case (Sections.recording.rawValue, RecordSettings.numberOfClipsSaved.rawValue):
+            let segmentedCell = self.getCell(cellType: .segmentedControlCell) as! SettingsSegmentedControlTableCell
+            segmentedCell.titleLabel.text = "Number of Clips Saved"
+            cell = segmentedCell
+        case (Sections.recording.rawValue, RecordSettings.lengthOfClip.rawValue):
+            let segmentedCell = self.getCell(cellType: .segmentedControlCell) as! SettingsSegmentedControlTableCell
+            let lengthOptions = VideoLengthOptions.self
+            let newSegmentWidth = segmentedCell.settingsSegmentedControl.widthForSegment(at: 0) * 0.6
+            print(segmentedCell.settingsSegmentedControl.widthForSegment(at: 0))
+            print(newSegmentWidth)
+            segmentedCell.settingsSegmentedControl.setTitle(lengthOptions.thirtySeconds.description, forSegmentAt: lengthOptions.thirtySeconds.rawValue)
+            segmentedCell.settingsSegmentedControl.setTitle(lengthOptions.twoMinutes.description, forSegmentAt: lengthOptions.twoMinutes.rawValue)
+            segmentedCell.settingsSegmentedControl.insertSegment(withTitle: lengthOptions.threeMinutes.description, at: lengthOptions.threeMinutes.rawValue, animated: false)
+            segmentedCell.settingsSegmentedControl.insertSegment(withTitle: lengthOptions.fiveMinutes.description, at: lengthOptions.fiveMinutes.rawValue, animated: false)
+            segmentedCell.settingsSegmentedControl.insertSegment(withTitle: lengthOptions.tenMinutes.description, at: lengthOptions.tenMinutes.rawValue, animated: false)
+            
+            for i in 0 ..< segmentedCell.settingsSegmentedControl.numberOfSegments {
+                segmentedCell.settingsSegmentedControl.setWidth(newSegmentWidth, forSegmentAt: i)
+            }
+            
+            
+            segmentedCell.titleLabel.text = "Video Length"
+            cell = segmentedCell
+        case (Sections.logout.rawValue, 0):
+            let logoutCell = self.getCell(cellType: .logoutCell) as! SettingsLogoutTableCell
+            logoutCell.logoutLabel.textColor = UIColor.red
+            logoutCell.logoutLabel.text = "Log Out"
+            cell = logoutCell
         default:
-            cell!.textLabel!.text = "Default"
+            cell = self.getCell(cellType: .standardCell)
+            cell.textLabel!.text = "Default"
         }
-        return cell!
-    }
-
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        
         return cell
     }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    private func getCell(cellType: CellTypes) -> UITableViewCell{
+        switch cellType {
+        case .standardCell:
+            return tableView.dequeueReusableCell(withIdentifier: standardCellIdentifier)!
+        case .logoutCell:
+            return tableView.dequeueReusableCell(withIdentifier: logOutCellIdentifier)!
+        case .segmentedControlCell:
+            return tableView.dequeueReusableCell(withIdentifier: segmentedControlCellIdentifier)!
+        case .switchCell:
+            return tableView.dequeueReusableCell(withIdentifier: switchCellIdentifier)!
+        }
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
