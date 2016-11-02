@@ -8,7 +8,18 @@
 
 import UIKit
 import Foundation
+import Firebase
 
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
+}
 
 class LogInViewController: UIViewController {
 
@@ -18,11 +29,36 @@ class LogInViewController: UIViewController {
     
     
     @IBAction func enterLogIn(_ sender: Any) {
+        if email.text == "" || password.text == "" {
+            let alertController = UIAlertController(title: "Error", message: "Incorrect Login Info", preferredStyle: .alert)
+            let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            alertController.addAction(defaultAction)
+            self.present(alertController, animated: true, completion: nil)
+        } else {
+            FIRAuth.auth()?.signIn(withEmail: email.text!, password: password.text!, completion: { (user, error) in
+                if error == nil {
+                    // go to mainVC
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let mainVC = storyboard.instantiateViewController(withIdentifier: "MainVC") as! ViewController
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.window?.rootViewController = mainVC
+                    
+                    
+                } else {
+                    let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
+                    let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                    alertController.addAction(defaultAction)
+                    self.present(alertController, animated: true, completion: nil)
+                }
+            })
+        }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        self.hideKeyboardWhenTappedAround() 
     }
     
     override func didReceiveMemoryWarning() {

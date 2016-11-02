@@ -54,6 +54,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             defaults.set(1, forKey: kSavedClipsNumberKey)
             defaults.synchronize()
         }
+        
+        // if user 
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        if (FIRAuth.auth()?.currentUser) != nil {
+            let mainVC = storyboard.instantiateViewController(withIdentifier: "MainVC") as! ViewController
+            self.window?.rootViewController = mainVC
+        } else {
+            let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginVC") as! LogInViewController
+            self.window?.rootViewController = loginVC
+        }
+        
+        
+        
         return true
     }
 
