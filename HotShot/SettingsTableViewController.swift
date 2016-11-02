@@ -129,13 +129,10 @@ class SettingsTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of Sections
         return Sections.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        
         switch section {
         case Sections.general.rawValue:
             return GeneralSettings.count
@@ -162,9 +159,6 @@ class SettingsTableViewController: UITableViewController {
             return ""
         }
     }
-    
-    
-//    override func tableView
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell

@@ -74,8 +74,6 @@ class ViewController: UIViewController, FileManagerDelegate {
                                 let vidUrl = "\(documentDir)/\(video.fileName)"
                                 try FileManager.default.removeItem(atPath: vidUrl)
                                 try! realm.write {
-//                                    let predicate = NSPredicate(format: "urlString = %@", url)
-//                                    let vid = realm.objects(Video.self).filter(predicate)
                                     realm.delete(video)
                                 }
                             }
