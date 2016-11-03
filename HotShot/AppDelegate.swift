@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     fileprivate let kFirstTimeLaunchKey = "firstAppLaunch"
     fileprivate let kClipLengthKey = "clipLengthInMinutes"
     fileprivate let kSavedClipsNumberKey = "savedClipsNumber"
+    fileprivate let kRecordAudioKey = "recordAudio"
     
     // MARK: Properties
     var clipLength: Double {
@@ -41,6 +42,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             defaults.synchronize()
         }
     }
+    
+    var shouldRecordAudio: Bool {
+        get {
+            return defaults.bool(forKey: kRecordAudioKey)
+        }
+        set (newVal) {
+            defaults.set(newVal, forKey: kRecordAudioKey)
+            defaults.synchronize()
+        }
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // MARK: Set user defautls
@@ -48,7 +59,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if !defaults.bool(forKey: kFirstTimeLaunchKey) {
             defaults.set(true, forKey: kFirstTimeLaunchKey)
             defaults.set(2.0, forKey: kClipLengthKey)
-            defaults.set(1, forKey: kSavedClipsNumberKey)
+            defaults.set(3, forKey: kSavedClipsNumberKey)
+            defaults.set(false, forKey: kRecordAudioKey)
             defaults.synchronize()
         }
         

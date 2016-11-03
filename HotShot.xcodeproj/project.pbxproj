@@ -16,6 +16,7 @@
 		31C656C01DC9048C00735CDF /* SettingsSegmentedControlTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C656BF1DC9048C00735CDF /* SettingsSegmentedControlTableCell.swift */; };
 		31C656C21DC9441A00735CDF /* SettingsLogoutTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C656C11DC9441A00735CDF /* SettingsLogoutTableCell.swift */; };
 		31C656C41DCA4C6900735CDF /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C656C31DCA4C6900735CDF /* Config.swift */; };
+		31C656C81DCA663B00735CDF /* RecordingSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C656C71DCA663B00735CDF /* RecordingSettingsTableViewController.swift */; };
 		31E37E701D9F1EFB00DB93B7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E37E6F1D9F1EFB00DB93B7 /* AppDelegate.swift */; };
 		31E37E721D9F1EFB00DB93B7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E37E711D9F1EFB00DB93B7 /* ViewController.swift */; };
 		31E37E751D9F1EFB00DB93B7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31E37E731D9F1EFB00DB93B7 /* Main.storyboard */; };
@@ -41,6 +42,7 @@
 		31C656BF1DC9048C00735CDF /* SettingsSegmentedControlTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsSegmentedControlTableCell.swift; path = ../SettingsSegmentedControlTableCell.swift; sourceTree = "<group>"; };
 		31C656C11DC9441A00735CDF /* SettingsLogoutTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsLogoutTableCell.swift; sourceTree = "<group>"; };
 		31C656C31DCA4C6900735CDF /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		31C656C71DCA663B00735CDF /* RecordingSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordingSettingsTableViewController.swift; sourceTree = "<group>"; };
 		31E37E6C1D9F1EFB00DB93B7 /* HotShot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HotShot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		31E37E6F1D9F1EFB00DB93B7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		31E37E711D9F1EFB00DB93B7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 				31E37E711D9F1EFB00DB93B7 /* ViewController.swift */,
 				315C3E471DAD723500AAEC9D /* VideosTableViewController.swift */,
 				955714911DB57D0000ED6E8B /* SettingsTableViewController.swift */,
+				31C656C71DCA663B00735CDF /* RecordingSettingsTableViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 				31C656BA1DC8FFC600735CDF /* VideoLengthOptions.swift in Sources */,
 				31C656BE1DC9044600735CDF /* SettingsSwitchTableCell.swift in Sources */,
 				31E37E781D9F1EFB00DB93B7 /* HotShot.xcdatamodeld in Sources */,
+				31C656C81DCA663B00735CDF /* RecordingSettingsTableViewController.swift in Sources */,
 				953251FE1DB6F989008CA39F /* NewUserViewController.swift in Sources */,
 				31C656C01DC9048C00735CDF /* SettingsSegmentedControlTableCell.swift in Sources */,
 				31C656C21DC9441A00735CDF /* SettingsLogoutTableCell.swift in Sources */,

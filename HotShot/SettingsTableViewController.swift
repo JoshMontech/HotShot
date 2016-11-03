@@ -12,6 +12,7 @@ class SettingsTableViewController: UITableViewController {
     let standardCellIdentifier = "SettingsStandardCell"
     let logOutCellIdentifier = "SettingsLogoutCell"
     let switchCellIdentifier = "SettingsSwitchCell"
+    let showVideoOptionsSegueIdentifier = "ShowVideoOptionsSegue"
     
     enum CellTypes {
         case standardCell, switchCell, logoutCell
@@ -187,7 +188,7 @@ class SettingsTableViewController: UITableViewController {
             cell.textLabel!.text = "Email"
         case (Sections.account.rawValue, AccountSettings.password.rawValue):
             cell = self.getCell(cellType: .standardCell)
-            cell.textLabel!.text = "password"
+            cell.textLabel!.text = "Password"
         case (Sections.recording.rawValue, RecordSettings.autoRecord.rawValue):
             let switchCell = self.getCell(cellType: .switchCell) as! SettingsSwitchTableCell
             switchCell.titleLabel.text = "Auto Record"
@@ -213,6 +214,27 @@ class SettingsTableViewController: UITableViewController {
         }
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case Sections.recording.rawValue:
+            switch indexPath.row {
+            case RecordSettings.video.rawValue:
+                performSegue(withIdentifier: showVideoOptionsSegueIdentifier, sender: self)
+            default:
+                return
+            }
+        default:
+            return
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier! {    
+        default:
+            return
+        }
     }
     
     private func getCell(cellType: CellTypes) -> UITableViewCell{
