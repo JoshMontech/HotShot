@@ -33,6 +33,7 @@ class VideosTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "videoPreviewCell", for: indexPath) as! VideoTableCell
         cell.videoNameLabel.text = "derp" //fix
         cell.videoPreviewThumbnail.image = #imageLiteral(resourceName: "flame") //fix
+        
         return cell
     }
     
