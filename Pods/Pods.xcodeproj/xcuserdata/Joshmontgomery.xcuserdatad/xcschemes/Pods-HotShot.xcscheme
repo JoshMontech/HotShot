@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "71501F3BD3E89C5E6D7C881B0D5CBD4A"
+               BlueprintIdentifier = "CA97164FBAF202ECD0C9FEAE742502F2"
                BuildableName = "Pods_HotShot.framework"
                BlueprintName = "Pods-HotShot"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "71501F3BD3E89C5E6D7C881B0D5CBD4A"
+            BlueprintIdentifier = "CA97164FBAF202ECD0C9FEAE742502F2"
             BuildableName = "Pods_HotShot.framework"
             BlueprintName = "Pods-HotShot"
             ReferencedContainer = "container:Pods.xcodeproj">
@@ -60,15 +60,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "71501F3BD3E89C5E6D7C881B0D5CBD4A"
-            BuildableName = "Pods_HotShot.framework"
-            BlueprintName = "Pods-HotShot"
-            ReferencedContainer = "container:Pods.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

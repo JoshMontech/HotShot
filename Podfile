@@ -6,6 +6,8 @@ use_frameworks!
 target 'HotShot' do
 	pod 'CameraManager', '~> 3.0'
 	pod 'RealmSwift'
+	pod 'Firebase/Core'
+	pod 'Firebase/Auth'
 end
 
 post_install do |installer|

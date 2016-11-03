@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,13 +16,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     // MARK: User Defaults init
     let defaults = UserDefaults.standard
-    
+
     // MARK: Keys
     fileprivate let kFirstTimeLaunchKey = "firstAppLaunch"
     fileprivate let kClipLengthKey = "clipLengthInMinutes"
     fileprivate let kSavedClipsNumberKey = "savedClipsNumber"
     fileprivate let kRecordAudioKey = "recordAudio"
-    
+
     // MARK: Properties
     var clipLength: Double {
         get {
@@ -32,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             defaults.synchronize()
         }
     }
-    
+
     var savedClipsNumber: Int {
         get {
             return defaults.integer(forKey: kSavedClipsNumberKey)
@@ -42,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             defaults.synchronize()
         }
     }
-    
+
     var shouldRecordAudio: Bool {
         get {
             return defaults.bool(forKey: kRecordAudioKey)
@@ -55,6 +56,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // MARK: Set user defautls
+        FIRApp.configure()
+
         // check if it's the first app launch
         if !defaults.bool(forKey: kFirstTimeLaunchKey) {
             defaults.set(true, forKey: kFirstTimeLaunchKey)
@@ -63,7 +66,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             defaults.set(false, forKey: kRecordAudioKey)
             defaults.synchronize()
         }
-        
+        // if user
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+
+        if (FIRAuth.auth()?.currentUser) != nil {
+            let mainVC = storyboard.instantiateViewController(withIdentifier: "MainVC") as! ViewController
+            self.window?.rootViewController = mainVC
+        } else {
+            let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginVC") as! LogInViewController
+            self.window?.rootViewController = loginVC
+        }
+
         return true
     }
 
@@ -126,7 +139,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NSLog("Unresolved error \(wrappedError), \(wrappedError.userInfo)")
             abort()
         }
-        
+
         return coordinator
     }()
 
@@ -155,4 +168,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 }
-
