@@ -44,18 +44,23 @@ class VideosTableViewController: UITableViewController {
         
         cell.videoNameLabel.text = "Recording\(indexPath.row + 1)"
         cell.videoPreviewThumbnail.image = thumbnail
+        cell.videoURL = videoURL
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "videoPreviewCell", for: indexPath) as! VideoTableCell
+        let cell = tableView.cellForRow(at: indexPath) as! VideoTableCell
+        
         if let url = cell.videoURL {
             self.avPlayer = AVPlayer(url: url as URL)
             self.avPlayerController.player = self.avPlayer
             present(self.avPlayerController, animated: true, completion: {
                 self.avPlayerController.player?.play()
             })
+        }
+        else {
+            NSLog("Error! URL is nil: \(cell.videoURL)")
         }
 
         tableView.deselectRow(at: indexPath, animated: true)
