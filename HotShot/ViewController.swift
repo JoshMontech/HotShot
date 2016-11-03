@@ -18,6 +18,7 @@ class ViewController: UIViewController, FileManagerDelegate {
     let warningMessage = "Please do not interact with the application while operating a vehicle."
     let realm = try! Realm()
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let documentDir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
     
     var shouldShowWarning = true
     
@@ -45,85 +46,17 @@ class ViewController: UIViewController, FileManagerDelegate {
     
 
     @IBAction func startRecordingButtonPressed(_ sender: UIButton) {
-        let documentDir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
         
         sender.isSelected = !sender.isSelected
-//        sender.setTitle(" ", for: UIControlState.selected)
-//        sender.titleLabel?.text = sender.isSelected ? "Stop Recording" : "Start Recording"
         sender.backgroundColor = sender.isSelected ? UIColor.red : UIColor.green
         
         // start recording
         if sender.isSelected {
-            DispatchQueue.global(qos: .background).async {
-                autoreleasepool{
-                    let realm = try! Realm()
-                    let videos = realm.objects(Video.self).sorted(byProperty: "date")
-                    let maxClips = self.appDelegate.savedClipsNumber
-                    let numSavedVids = videos.count
-                    
-                    
-                    // remove oldest saved videos
-                    if maxClips <= numSavedVids {
-                        var toBeDeletedVideos = [Video]()
-                        for i in 0...numSavedVids - maxClips {
-                            toBeDeletedVideos.append(videos[i])
-                        }
-                        
-                        for video in toBeDeletedVideos {
-                            do {
-                                let vidUrl = "\(documentDir)/\(video.fileName)"
-                                try FileManager.default.removeItem(atPath: vidUrl)
-                                try! realm.write {
-                                    realm.delete(video)
-                                }
-                            }
-                            catch let error {
-                                print("There was a problem deleting the video")
-                                NSLog(error.localizedDescription)
-                            }
-                        }
-                    }
-                }
-            }
-            cameraManager.startRecordingVideo()
+            startRecording()
         }
         // stop recording
         else {
-            cameraManager.stopVideoRecording({ (videoURL, error) -> Void in
-                if let errorOccured = error {
-                    self.cameraManager.showErrorBlock("Error occurred", errorOccured.localizedDescription)
-                }
-                else {
-                    let date = Date()
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.locale = Locale(identifier: "US_en")
-                    dateFormatter.dateFormat = "MMMddyyyy-HHmmss"
-                    let dateString = dateFormatter.string(from: date)
-                    let savedDocPath = "\(documentDir)/\(dateString).mp4"
-                    let vidFileName = "\(dateString).mp4"
-                    
-//                    print(FileManager().contentsOfDirectory(atPath: documentDir))
-                    
-                    if let savedDocURL = URL(string: "file:///private\(savedDocPath)") {
-                        do {
-                            try FileManager.default.copyItem(at: videoURL!, to: savedDocURL)
-                            let newVideo = Video()
-                            newVideo.fileName = vidFileName
-                            newVideo.date = date as NSDate
-                            try! self.realm.write {
-                                self.realm.add(newVideo)
-                            }
-                            
-                        }
-                        catch let error {
-                            print("There was a problem saving the video")
-                            NSLog(error.localizedDescription)
-                        }
-                    }
-                    
-                    
-                }
-            })
+            stopRecording()
         }
     }
     
@@ -147,6 +80,79 @@ class ViewController: UIViewController, FileManagerDelegate {
             self?.present(alertController, animated: true, completion: nil)
         }
         cameraManager.writeFilesToPhoneLibrary = false
+    }
+    
+    private func startRecording() {
+        DispatchQueue.global(qos: .background).async {
+            autoreleasepool{
+                let realm = try! Realm()
+                let videos = realm.objects(Video.self).sorted(byProperty: "date")
+                let maxClips = self.appDelegate.savedClipsNumber
+                let numSavedVids = videos.count
+                
+                
+                // remove oldest saved videos
+                if maxClips <= numSavedVids {
+                    var toBeDeletedVideos = [Video]()
+                    for i in 0...numSavedVids - maxClips {
+                        toBeDeletedVideos.append(videos[i])
+                    }
+                    
+                    for video in toBeDeletedVideos {
+                        do {
+                            let vidUrl = "\(self.documentDir)/\(video.fileName)"
+                            try FileManager.default.removeItem(atPath: vidUrl)
+                            try! realm.write {
+                                realm.delete(video)
+                            }
+                        }
+                        catch let error {
+                            print("There was a problem deleting the video")
+                            NSLog(error.localizedDescription)
+                        }
+                    }
+                }
+            }
+        }
+        cameraManager.startRecordingVideo()
+    }
+    
+    private func stopRecording() {
+        cameraManager.stopVideoRecording({ (videoURL, error) -> Void in
+            if let errorOccured = error {
+                self.cameraManager.showErrorBlock("Error occurred", errorOccured.localizedDescription)
+            }
+            else {
+                let date = Date()
+                let dateFormatter = DateFormatter()
+                dateFormatter.locale = Locale(identifier: "US_en")
+                dateFormatter.dateFormat = "MMMddyyyy-HHmmss"
+                let dateString = dateFormatter.string(from: date)
+                let savedDocPath = "\(self.documentDir)/\(dateString).mp4"
+                let vidFileName = "\(dateString).mp4"
+                
+                //                    print(FileManager().contentsOfDirectory(atPath: documentDir))
+                
+                if let savedDocURL = URL(string: "file:///private\(savedDocPath)") {
+                    do {
+                        try FileManager.default.copyItem(at: videoURL!, to: savedDocURL)
+                        let newVideo = Video()
+                        newVideo.fileName = vidFileName
+                        newVideo.date = date as NSDate
+                        try! self.realm.write {
+                            self.realm.add(newVideo)
+                        }
+                        
+                    }
+                    catch let error {
+                        print("There was a problem saving the video")
+                        NSLog(error.localizedDescription)
+                    }
+                }
+                
+                
+            }
+        })
     }
 }
 
