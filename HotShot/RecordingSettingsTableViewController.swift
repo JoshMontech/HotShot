@@ -9,8 +9,9 @@
 import UIKit
 
 class RecordingSettingsTableViewController: UITableViewController {
-    let videoOptionCellIdentifier = "VideoOptionsCell"
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let videoOptionCellIdentifier = "VideoOptionsCell"
+    let switchCellIdentifier = "SettingsSwitchCell"
     
     var selectedSegmentLength = Set<Int>()
     var selectedNumberOfSegments = Set<Int>()
@@ -82,9 +83,18 @@ class RecordingSettingsTableViewController: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        switch section {
+        case Sections.audio.rawValue:
+            return "Off to allow music playback"
+        default:
+            return ""
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellLocation = (indexPath.section, indexPath.row)
-        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: videoOptionCellIdentifier)!
+        var cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: videoOptionCellIdentifier)!
         
         switch cellLocation {
             //MARK: Segment Length
@@ -125,6 +135,14 @@ class RecordingSettingsTableViewController: UITableViewController {
         case (Sections.clipNumbers.rawValue, SavedTempVideoNumberOptions.ten.rawValue):
             cell.textLabel?.text = SavedTempVideoNumberOptions.ten.description
             cell.accessoryType = selectedNumberOfSegments.contains(indexPath.row) ? .checkmark : .none
+        //MARK: Audio Recording
+        case (Sections.audio.rawValue, 0):
+            if let switchCell = tableView.dequeueReusableCell(withIdentifier: switchCellIdentifier) as? SettingsSwitchTableCell {
+                switchCell.titleLabel.text = "Audio Recording"
+                switchCell.settingsSwitch.isEnabled = false
+                switchCell.settingsSwitch.setOn(appDelegate.shouldRecordAudio, animated: false)
+                cell = switchCell
+            }
         default:
             return cell
         }
@@ -162,11 +180,11 @@ class RecordingSettingsTableViewController: UITableViewController {
             self.appDelegate.savedClipsNumber = getNumberOfSegments(row: indexPath.row)
         }
         else {  // audio
-            //TODO: allow users to set audio
+            if let switchCell = tableView.cellForRow(at: indexPath) as? SettingsSwitchTableCell {
+                switchCell.settingsSwitch.setOn(!switchCell.settingsSwitch.isOn, animated: true)
+                appDelegate.shouldRecordAudio = switchCell.settingsSwitch.isOn
+            }
         }
-        
-        print("Clip Length: \(appDelegate.clipLength)")
-        print("Clip Number: \(appDelegate.savedClipsNumber)")
     }
     
     private func getSegmentLength(row: Int) -> Double {
