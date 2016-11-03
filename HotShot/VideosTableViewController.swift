@@ -9,30 +9,41 @@
 import UIKit
 import AVKit
 import AVFoundation
+import RealmSwift
 
 class VideosTableViewController: UITableViewController {
-    
-    var videoCount:Int = 0
     let avPlayerController = AVPlayerViewController()
+    let documentDir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+    
     var avPlayer: AVPlayer? = nil
+    var videos: [Video] = [Video]()
     
     override func viewDidLoad() {
         self.navigationController?.navigationBar.isHidden = false
-        videoCount = getVideoCount()
     }
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+    override func viewWillAppear(_ animated: Bool) {
+        let realm = try! Realm()
+        let result = realm.objects(Video.self).sorted(byProperty: "date")
+        for i in 0 ..< result.count {
+            videos.append(result[i])
+        }
+        
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return videoCount
+        return videos.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "videoPreviewCell", for: indexPath) as! VideoTableCell
-        cell.videoNameLabel.text = "derp" //fix
-        cell.videoPreviewThumbnail.image = #imageLiteral(resourceName: "flame") //fix
+        // "\(self.documentDir)/\(dateString).mp4"
+        let video = videos[indexPath.row]
+        let videoURL = URL(string: "file:///private\(self.documentDir)/\(video.fileName)")
+        let thumbnail = getVideoPreviewThumbnail(sourceURL: videoURL!)
+        
+        cell.videoNameLabel.text = "Recording\(indexPath.row + 1)"
+        cell.videoPreviewThumbnail.image = thumbnail
         
         return cell
     }
@@ -45,17 +56,23 @@ class VideosTableViewController: UITableViewController {
             present(self.avPlayerController, animated: true, completion: {
                 self.avPlayerController.player?.play()
             })
-        } else {
-            print("derp")
         }
 
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    //helper functions
-    func getVideoCount() -> Int {
-        //once videos are working properly, will have more sophisticated handling
-        return 4 //fix
+    private func getVideoPreviewThumbnail(sourceURL:URL) -> UIImage {
+        let asset = AVAsset(url: sourceURL)
+        let imageGenerator = AVAssetImageGenerator(asset: asset)
+        let time = CMTime(seconds: 1, preferredTimescale: 1)
+        
+        do {
+            let imageRef = try imageGenerator.copyCGImage(at: time, actualTime: nil)
+            return UIImage(cgImage: imageRef)
+        } catch {
+            NSLog(error.localizedDescription)
+            return #imageLiteral(resourceName: "flame")
+        }
     }
     
 }

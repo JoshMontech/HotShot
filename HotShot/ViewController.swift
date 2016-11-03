@@ -16,7 +16,6 @@ class ViewController: UIViewController, FileManagerDelegate {
     @IBOutlet weak var controllView: UIView!
     let cameraManager = CameraManager()
     let warningMessage = "Please do not interact with the application while operating a vehicle."
-    let realm = try! Realm()
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let documentDir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
     
@@ -123,6 +122,7 @@ class ViewController: UIViewController, FileManagerDelegate {
                 self.cameraManager.showErrorBlock("Error occurred", errorOccured.localizedDescription)
             }
             else {
+                let realm = try! Realm()
                 let date = Date()
                 let dateFormatter = DateFormatter()
                 dateFormatter.locale = Locale(identifier: "US_en")
@@ -131,16 +131,14 @@ class ViewController: UIViewController, FileManagerDelegate {
                 let savedDocPath = "\(self.documentDir)/\(dateString).mp4"
                 let vidFileName = "\(dateString).mp4"
                 
-                //                    print(FileManager().contentsOfDirectory(atPath: documentDir))
-                
                 if let savedDocURL = URL(string: "file:///private\(savedDocPath)") {
                     do {
                         try FileManager.default.copyItem(at: videoURL!, to: savedDocURL)
                         let newVideo = Video()
                         newVideo.fileName = vidFileName
                         newVideo.date = date as NSDate
-                        try! self.realm.write {
-                            self.realm.add(newVideo)
+                        try! realm.write {
+                            realm.add(newVideo)
                         }
                         
                     }

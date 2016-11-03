@@ -12,5 +12,5 @@ class VideoTableCell: UITableViewCell {
     @IBOutlet weak var videoNameLabel: UILabel!
     @IBOutlet weak var videoPreviewThumbnail: UIImageView!
     
-    var videoURL:NSURL?
+    var videoURL:URL?
 }
