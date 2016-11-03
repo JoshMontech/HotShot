@@ -66,12 +66,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             defaults.set(false, forKey: kRecordAudioKey)
             defaults.synchronize()
         }
+
         // if user
+
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
 
-        if (FIRAuth.auth()?.currentUser) != nil {
-            let mainVC = storyboard.instantiateViewController(withIdentifier: "MainVC") as! ViewController
-            self.window?.rootViewController = mainVC
+        if (FIRAuth.auth()?.currentUser) == nil {
+            /*let mainVC = storyboard.instantiateViewController(withIdentifier: "MainVC") as! ViewController
+            self.window?.rootViewController = mainVC*/
+
+            let viewController = storyboard.instantiateViewController(withIdentifier: "MainVC") as! ViewController
+
+            // Creating a navigation controller with viewController at the root of the navigation stack.
+            let navController = UINavigationController(rootViewController: viewController)
+
+            self.window?.rootViewController?.present(navController, animated:true, completion: nil)
+
         } else {
             let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginVC") as! LogInViewController
             self.window?.rootViewController = loginVC

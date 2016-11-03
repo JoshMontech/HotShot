@@ -38,11 +38,26 @@ class LogInViewController: UIViewController {
             FIRAuth.auth()?.signIn(withEmail: email.text!, password: password.text!, completion: { (user, error) in
                 if error == nil {
                     // go to mainVC
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    let mainVC = storyboard.instantiateViewController(withIdentifier: "MainVC") as! ViewController
-                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                    appDelegate.window?.rootViewController = mainVC
                     
+                    //let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    /*let mainVC = storyboard.instantiateViewController(withIdentifier: "MainVC") as! ViewController
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.window?.rootViewController = mainVC*/
+                    
+                    
+                   /*
+                    let viewController = storyboard.instantiateViewController(withIdentifier: "MainVC") as! ViewController
+                    let navController = UINavigationController(rootViewController: viewController)
+                    
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.window?.rootViewController = viewController
+                    viewController.present(navController, animated:true, completion: nil)
+                    */
+                    let viewController = self.storyboard?.instantiateViewController(withIdentifier: "MainVC") as! ViewController
+                    
+                    // Creating a navigation controller with viewController at the root of the navigation stack.
+                    let navController = UINavigationController(rootViewController: viewController)
+                    self.present(navController, animated:true, completion: nil)
                     
                 } else {
                     let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)

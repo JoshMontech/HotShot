@@ -456,7 +456,7 @@
             </objects>
             <point key="canvasLocation" x="2621" y="994"/>
         </scene>
-        <!--Videos-->
+        <!--Title-->
         <scene sceneID="hFa-X4-JRb">
             <objects>
                 <tableViewController id="O3x-FA-136" customClass="VideosTableViewController" customModule="HotShot" customModuleProvider="target" sceneMemberID="viewController">
@@ -508,7 +508,7 @@
                             <outlet property="delegate" destination="O3x-FA-136" id="Flo-f6-2Ag"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Videos" id="S9c-4h-Wf4"/>
+                    <navigationItem key="navigationItem" title="Title" id="Ift-kz-FMc"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Izz-bi-PKM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
