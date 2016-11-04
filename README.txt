@@ -7,6 +7,7 @@ Josh Montgomery (30%)
 * Added Firebase framework
 * Implemented Login/Signup functionality
 * Implemented login/Signup VC flow logic
+* Added logout and account update functionality
 
 Jerry Pon (40%)
 
