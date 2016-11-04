@@ -25,6 +25,7 @@ class NewUserViewController: UIViewController {
         } else {
             FIRAuth.auth()?.createUser(withEmail: self.email.text!, password: self.password.text!, completion: { (user, error) in
                 if error == nil {
+                    user?.sendEmailVerification(completion: nil)
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let mainVC = storyboard.instantiateViewController(withIdentifier: "MainVC") as! ViewController
                     let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -40,7 +41,7 @@ class NewUserViewController: UIViewController {
     }
     
     @IBAction func dismissSignUpButtonPressed(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
+        //navigationController?.popViewController(animated: true)
         dismiss(animated: true, completion: nil)
     }
     

@@ -26,8 +26,6 @@ class LogInViewController: UIViewController {
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var password: UITextField!
     
-    
-    
     @IBAction func enterLogIn(_ sender: Any) {
         if email.text == "" || password.text == "" {
             let alertController = UIAlertController(title: "Error", message: "Incorrect Login Info", preferredStyle: .alert)
@@ -36,7 +34,7 @@ class LogInViewController: UIViewController {
             self.present(alertController, animated: true, completion: nil)
         } else {
             FIRAuth.auth()?.signIn(withEmail: email.text!, password: password.text!, completion: { (user, error) in
-                if error == nil {
+                if error == nil && (user?.isEmailVerified)! {
                     // go to mainVC
                     
                     //let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -53,6 +51,7 @@ class LogInViewController: UIViewController {
                     appDelegate.window?.rootViewController = viewController
                     viewController.present(navController, animated:true, completion: nil)
                     */
+
                     let viewController = self.storyboard?.instantiateViewController(withIdentifier: "MainVC") as! ViewController
                     
                     // Creating a navigation controller with viewController at the root of the navigation stack.

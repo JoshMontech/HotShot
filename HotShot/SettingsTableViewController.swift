@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class SettingsTableViewController: UITableViewController {
     let standardCellIdentifier = "SettingsStandardCell"
@@ -56,17 +57,13 @@ class SettingsTableViewController: UITableViewController {
     }
     
     enum AccountSettings: Int {
-        case email = 0, password, firstName, lastName, cloud
+        case email = 0, password, cloud
         
         var cellType: CellTypes {
             switch self {
             case .cloud:
                 return CellTypes.standardCell
             case .email:
-                return CellTypes.standardCell
-            case .firstName:
-                return CellTypes.standardCell
-            case .lastName:
                 return CellTypes.standardCell
             case .password:
                 return CellTypes.standardCell
@@ -177,12 +174,6 @@ class SettingsTableViewController: UITableViewController {
         case (Sections.account.rawValue, AccountSettings.cloud.rawValue):
             cell = self.getCell(cellType: .standardCell)
             cell.textLabel!.text = "Cloud"
-        case (Sections.account.rawValue, AccountSettings.firstName.rawValue):
-            cell = self.getCell(cellType: .standardCell)
-            cell.textLabel!.text = "First Name"
-        case (Sections.account.rawValue, AccountSettings.lastName.rawValue):
-            cell = self.getCell(cellType: .standardCell)
-            cell.textLabel!.text = "Second Name"
         case (Sections.account.rawValue, AccountSettings.email.rawValue):
             cell = self.getCell(cellType: .standardCell)
             cell.textLabel!.text = "Email"
@@ -225,6 +216,11 @@ class SettingsTableViewController: UITableViewController {
             default:
                 return
             }
+        case Sections.logout.rawValue:
+            //logout stuff
+            try! FIRAuth.auth()!.signOut()
+            let loginViewController = self.storyboard!.instantiateViewController(withIdentifier: "LoginVC")
+            UIApplication.shared.keyWindow?.rootViewController = loginViewController
         default:
             return
         }
