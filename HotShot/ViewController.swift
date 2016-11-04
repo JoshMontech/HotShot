@@ -20,11 +20,11 @@ class ViewController: UIViewController, FileManagerDelegate {
     let documentDir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
     
     var shouldShowWarning = true
+    var isRecording = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        setupCamera()
         self.controllView.alpha = 0.75
     }
     
@@ -36,6 +36,7 @@ class ViewController: UIViewController, FileManagerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = true
+        setupCamera()
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,17 +46,24 @@ class ViewController: UIViewController, FileManagerDelegate {
     
 
     @IBAction func startRecordingButtonPressed(_ sender: UIButton) {
-        
         sender.isSelected = !sender.isSelected
         sender.backgroundColor = sender.isSelected ? UIColor.red : UIColor.green
         
         // start recording
         if sender.isSelected {
-            startRecording()
+            if #available(iOS 10.0, *) {
+                let timer = Timer.scheduledTimer(timeInterval: 60.0 * appDelegate.clipLength, target: self, selector: #selector(startRecording), userInfo: nil, repeats: true)
+                timer.fire()
+                isRecording = true
+            } else {
+                // Fallback on earlier versions
+                // TODO: support older iOS versions
+            }
         }
         // stop recording
         else {
             stopRecording()
+            isRecording = false
         }
     }
     
@@ -69,10 +77,9 @@ class ViewController: UIViewController, FileManagerDelegate {
     }
     
     private func setupCamera() {
-        // TODO: replace CameraOutputMode.videoWithMic with the user settings (user defaults)
-        let _ = cameraManager.addPreviewLayerToView(self.cameraView, newCameraOutputMode: CameraOutputMode.videoOnly)
+        let outputMode = appDelegate.shouldRecordAudio ? CameraOutputMode.videoWithMic : CameraOutputMode.videoOnly
+        let _ = cameraManager.addPreviewLayerToView(self.cameraView, newCameraOutputMode: outputMode)
         cameraManager.showErrorBlock = { [weak self] (erTitle: String, erMessage: String) -> Void in
-            
             let alertController = UIAlertController(title: erTitle, message: erMessage, preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (alertAction) -> Void in  }))
             
@@ -81,15 +88,16 @@ class ViewController: UIViewController, FileManagerDelegate {
         cameraManager.writeFilesToPhoneLibrary = false
     }
     
-    private func startRecording() {
+    @objc private func startRecording() {
         DispatchQueue.global(qos: .background).async {
             autoreleasepool{
+                if self.isRecording {
+                    self.stopRecording()
+                }
                 let realm = try! Realm()
                 let videos = realm.objects(Video.self).sorted(byProperty: "date")
                 let maxClips = self.appDelegate.savedClipsNumber
                 let numSavedVids = videos.count
-                
-                
                 // remove oldest saved videos
                 if maxClips <= numSavedVids {
                     var toBeDeletedVideos = [Video]()
@@ -111,9 +119,9 @@ class ViewController: UIViewController, FileManagerDelegate {
                         }
                     }
                 }
+                self.cameraManager.startRecordingVideo()
             }
         }
-        cameraManager.startRecordingVideo()
     }
     
     private func stopRecording() {
@@ -140,17 +148,16 @@ class ViewController: UIViewController, FileManagerDelegate {
                         try! realm.write {
                             realm.add(newVideo)
                         }
-                        
                     }
                     catch let error {
                         print("There was a problem saving the video")
                         NSLog(error.localizedDescription)
                     }
                 }
-                
-                
             }
         })
     }
+    
+    
 }
 
