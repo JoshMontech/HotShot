@@ -34,7 +34,7 @@ class LogInViewController: UIViewController {
             self.present(alertController, animated: true, completion: nil)
         } else {
             FIRAuth.auth()?.signIn(withEmail: email.text!, password: password.text!, completion: { (user, error) in
-                if error == nil && (user?.isEmailVerified)! {
+                if error == nil /*&& (user?.isEmailVerified)!*/ {
                     // go to mainVC
                     
                     //let storyboard = UIStoryboard(name: "Main", bundle: nil)

@@ -221,6 +221,56 @@ class SettingsTableViewController: UITableViewController {
             try! FIRAuth.auth()!.signOut()
             let loginViewController = self.storyboard!.instantiateViewController(withIdentifier: "LoginVC")
             UIApplication.shared.keyWindow?.rootViewController = loginViewController
+        case Sections.account.rawValue:
+            switch indexPath.row {
+            case AccountSettings.password.rawValue:
+                    //password stuff
+                let alert = UIAlertController(title: "Update Password", message: "Please enter a new password", preferredStyle: .alert)
+                alert.addTextField { (textField) in
+                    textField.text = ""
+                }
+                
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in
+                    let textField = alert.textFields![0] // Force unwrapping because we know it exists.
+                    let user = FIRAuth.auth()?.currentUser
+                    
+                    user?.updatePassword(textField.text!) { error in
+                        if error != nil {
+                            let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
+                            let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                            alertController.addAction(defaultAction)
+                            self.present(alertController, animated: true, completion: nil)
+                        }
+                    }
+                }))
+
+                self.present(alert, animated: true, completion: nil)
+
+            case AccountSettings.email.rawValue:
+                let alert = UIAlertController(title: "Update email address", message: "Please enter a new email address", preferredStyle: .alert)
+                alert.addTextField { (textField) in
+                    textField.text = ""
+                }
+                
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in
+                    let textField = alert.textFields![0] // Force unwrapping because we know it exists.
+                    let user = FIRAuth.auth()?.currentUser
+                    
+                    user?.updateEmail(textField.text!) { error in
+                        if error != nil {
+                            let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
+                            let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                            alertController.addAction(defaultAction)
+                            self.present(alertController, animated: true, completion: nil)
+                        }
+                    }
+                }))
+                
+                self.present(alert, animated: true, completion: nil)
+
+            default:
+                return
+            }
         default:
             return
         }
