@@ -89,9 +89,9 @@
 		31C656C51DCA522600735CDF /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				31E37E711D9F1EFB00DB93B7 /* ViewController.swift */,
 				953251FB1DB6F60D008CA39F /* LogInViewController.swift */,
 				953251FD1DB6F989008CA39F /* NewUserViewController.swift */,
-				31E37E711D9F1EFB00DB93B7 /* ViewController.swift */,
 				315C3E471DAD723500AAEC9D /* VideosTableViewController.swift */,
 				955714911DB57D0000ED6E8B /* SettingsTableViewController.swift */,
 				31C656C71DCA663B00735CDF /* RecordingSettingsTableViewController.swift */,
