@@ -1,7 +1,9 @@
 Contributions:
 
 Jake Mayo (30%)
-
+* Created speedometer app to merge to final release
+* App can track your current latitude and longitude
+* Research about adding filters to video
 
 Josh Montgomery (30%)
 * Added Firebase framework
@@ -16,5 +18,5 @@ Josh: experienced issues when he added Firebase with Cocoapods due to complicati
 
 Jerry:
 
-Jake:
+Jake: Had two projects, Algo exam, two homeworks and an essay due this week. So I was very busy!
 
