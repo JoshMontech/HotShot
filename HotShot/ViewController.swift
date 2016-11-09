@@ -24,6 +24,9 @@ class ViewController: UIViewController, FileManagerDelegate {
     var shouldShowWarning = true
     var isRecording = false
     
+    var startRecordingCount = 1
+    var stopRecordingCount = 1
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -46,28 +49,40 @@ class ViewController: UIViewController, FileManagerDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
     @IBAction func startRecordingButtonPressed(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
-        sender.backgroundColor = sender.isSelected ? UIColor.red : UIColor.green
-        
-        // start recording
-        if sender.isSelected {
-            if #available(iOS 10.0, *) {
-                let timer = Timer.scheduledTimer(timeInterval: 60.0 * appDelegate.clipLength, target: self, selector: #selector(startRecording), userInfo: nil, repeats: true)
+        sender.backgroundColor = sender.isSelected ? UIColor.red : config.recordGreen
+        if #available(iOS 10.0, *) {
+            let timer = Timer.scheduledTimer(timeInterval: 60.0 * appDelegate.clipLength, target: self, selector: #selector(stopAndStartRecording), userInfo: nil, repeats: true)
+            // start recording
+            if sender.isSelected {
                 timer.fire()
                 isRecording = true
-            } else {
-                // Fallback on earlier versions
-                // TODO: support older iOS versions
+            }
+            // stop recording
+            else {
+                timer.invalidate()
+                stopRecording()
+                isRecording = false
+            }
+        } else {
+            // Fallback on earlier versions
+            // TODO: check if it works on older iOS versions
+            let timer = Timer(timeInterval: 60.0 * appDelegate.clipLength, target: self, selector: #selector(stopAndStartRecording), userInfo: nil, repeats: true)
+            // start recording
+            if sender.isSelected {
+                timer.fire()
+                isRecording = true
+            }
+                // stop recording
+            else {
+                timer.invalidate()
+                stopRecording()
+                isRecording = false
             }
         }
-        // stop recording
-        else {
-            stopRecording()
-            isRecording = false
-        }
+        
     }
     
     private func displayInitialAlert() {
@@ -91,20 +106,77 @@ class ViewController: UIViewController, FileManagerDelegate {
         cameraManager.writeFilesToPhoneLibrary = false
     }
     
-    @objc private func startRecording() {
+//    @objc private func startRecording() {
+//        self.cameraManager.startRecordingVideo()
+//    }
+    
+    private func stopRecording() {
+        cameraManager.stopVideoRecording({ (videoURL, error) -> Void in
+            if let errorOccured = error {
+                self.cameraManager.showErrorBlock("Error occurred", errorOccured.localizedDescription)
+            }
+            else {
+                self.saveVideo(videoURL: videoURL!)
+            }
+        })
+    }
+    
+    @objc private func stopAndStartRecording() {
+        guard isRecording else {
+            self.cameraManager.startRecordingVideo()
+            return
+        }
+        
+        cameraManager.stopVideoRecording({ (videoURL, error) -> Void in
+            if let errorOccured = error {
+                self.cameraManager.showErrorBlock("Error occurred", errorOccured.localizedDescription)
+            }
+            else {
+                self.saveVideo(videoURL: videoURL!)
+            }
+            self.cameraManager.startRecordingVideo()
+        })
+    }
+
+    private func saveVideo(videoURL: URL) {
+        let realm = try! Realm()
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "US_en")
+        dateFormatter.dateFormat = "MMMddyyyy-HHmmss"
+        let dateString = dateFormatter.string(from: date)
+        let savedDocPath = "\(self.documentDir)/\(dateString).mp4"
+        let vidFileName = "\(dateString).mp4"
+        
+        if let savedDocURL = URL(string: "file:///private\(savedDocPath)") {
+            do {
+                try FileManager.default.copyItem(at: videoURL, to: savedDocURL)
+                let newVideo = Video()
+                newVideo.fileName = vidFileName
+                newVideo.date = date as NSDate
+                try! realm.write {
+                    realm.add(newVideo)
+                }
+            }
+            catch let error {
+                print("There was a problem saving the video")
+                NSLog(error.localizedDescription)
+            }
+        }
+        
+        self.checkAndRemoveSavedSegments()
+    }
+    private func checkAndRemoveSavedSegments() {
         DispatchQueue.global(qos: .background).async {
             autoreleasepool{
-                if self.isRecording {
-                    self.stopRecording()
-                }
                 let realm = try! Realm()
                 let videos = realm.objects(Video.self).sorted(byProperty: "date")
                 let maxClips = self.appDelegate.savedClipsNumber
                 let numSavedVids = videos.count
-                // remove oldest saved videos
-                if maxClips <= numSavedVids {
+                
+                if maxClips < numSavedVids {
                     var toBeDeletedVideos = [Video]()
-                    for i in 0...numSavedVids - maxClips {
+                    for i in 0..<numSavedVids - maxClips {
                         toBeDeletedVideos.append(videos[i])
                     }
                     
@@ -122,45 +194,8 @@ class ViewController: UIViewController, FileManagerDelegate {
                         }
                     }
                 }
-                self.cameraManager.startRecordingVideo()
             }
         }
     }
-    
-    private func stopRecording() {
-        cameraManager.stopVideoRecording({ (videoURL, error) -> Void in
-            if let errorOccured = error {
-                self.cameraManager.showErrorBlock("Error occurred", errorOccured.localizedDescription)
-            }
-            else {
-                let realm = try! Realm()
-                let date = Date()
-                let dateFormatter = DateFormatter()
-                dateFormatter.locale = Locale(identifier: "US_en")
-                dateFormatter.dateFormat = "MMMddyyyy-HHmmss"
-                let dateString = dateFormatter.string(from: date)
-                let savedDocPath = "\(self.documentDir)/\(dateString).mp4"
-                let vidFileName = "\(dateString).mp4"
-                
-                if let savedDocURL = URL(string: "file:///private\(savedDocPath)") {
-                    do {
-                        try FileManager.default.copyItem(at: videoURL!, to: savedDocURL)
-                        let newVideo = Video()
-                        newVideo.fileName = vidFileName
-                        newVideo.date = date as NSDate
-                        try! realm.write {
-                            realm.add(newVideo)
-                        }
-                    }
-                    catch let error {
-                        print("There was a problem saving the video")
-                        NSLog(error.localizedDescription)
-                    }
-                }
-            }
-        })
-    }
-    
-    
 }
 
