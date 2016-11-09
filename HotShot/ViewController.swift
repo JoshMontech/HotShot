@@ -14,10 +14,12 @@ class ViewController: UIViewController, FileManagerDelegate {
 
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var controllView: UIView!
+    @IBOutlet weak var recordButton: UIButton!
     let cameraManager = CameraManager()
     let warningMessage = "Please do not interact with the application while operating a vehicle."
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let documentDir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+    let config = Config.sharedInstance
     
     var shouldShowWarning = true
     var isRecording = false
@@ -26,6 +28,7 @@ class ViewController: UIViewController, FileManagerDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.controllView.alpha = 0.75
+        self.recordButton.backgroundColor = config.recordGreen
     }
     
     override func viewDidAppear(_ animated: Bool) {
