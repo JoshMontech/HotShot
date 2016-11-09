@@ -24,7 +24,7 @@ class VideosTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         let realm = try! Realm()
-        let result = realm.objects(Video.self).sorted(byProperty: "date")
+        let result = realm.objects(Video.self).sorted(byProperty: "date", ascending: false)
         for i in 0 ..< result.count {
             videos.append(result[i])
         }
@@ -37,7 +37,6 @@ class VideosTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "videoPreviewCell", for: indexPath) as! VideoTableCell
-        // "\(self.documentDir)/\(dateString).mp4"
         let video = videos[indexPath.row]
         let videoURL = URL(string: "file:///private\(self.documentDir)/\(video.fileName)")
         let thumbnail = getVideoPreviewThumbnail(sourceURL: videoURL!)
