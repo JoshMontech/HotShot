@@ -75,7 +75,7 @@ class ViewController: UIViewController, FileManagerDelegate {
                 timer.fire()
                 isRecording = true
             }
-                // stop recording
+            // stop recording
             else {
                 timer.invalidate()
                 stopRecording()
@@ -105,10 +105,6 @@ class ViewController: UIViewController, FileManagerDelegate {
         }
         cameraManager.writeFilesToPhoneLibrary = false
     }
-    
-//    @objc private func startRecording() {
-//        self.cameraManager.startRecordingVideo()
-//    }
     
     private func stopRecording() {
         cameraManager.stopVideoRecording({ (videoURL, error) -> Void in
