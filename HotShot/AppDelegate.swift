@@ -22,6 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     fileprivate let kClipLengthKey = "clipLengthInMinutes"
     fileprivate let kSavedClipsNumberKey = "savedClipsNumber"
     fileprivate let kRecordAudioKey = "recordAudio"
+    fileprivate let kAutoRecordAtLaunchKey = "autoRecordAtLaunch"
+    fileprivate let kPowerSaverKey = "powerSaver"
+    fileprivate let kSpeedWaterMark = "speedWaterMark"
 
     // MARK: Properties
     var clipLength: Double {
@@ -64,6 +67,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             defaults.set(2.0, forKey: kClipLengthKey)
             defaults.set(3, forKey: kSavedClipsNumberKey)
             defaults.set(false, forKey: kRecordAudioKey)
+            defaults.set(false, forKey: kAutoRecordAtLaunchKey)
+            defaults.set(false, forKey: kPowerSaverKey)
+            defaults.set(false, forKey: kSpeedWaterMark)
             defaults.synchronize()
         }
 
