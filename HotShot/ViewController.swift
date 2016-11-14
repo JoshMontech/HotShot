@@ -11,10 +11,14 @@ import CameraManager
 import RealmSwift
 
 class ViewController: UIViewController, FileManagerDelegate {
-
+    
+    @IBOutlet weak var settingsButton: UIButton!
+    @IBOutlet weak var videosButton: UIView!
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var controllView: UIView!
     @IBOutlet weak var recordButton: UIButton!
+    
+    
     let cameraManager = CameraManager()
     let warningMessage = "Please do not interact with the application while operating a vehicle."
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -59,12 +63,16 @@ class ViewController: UIViewController, FileManagerDelegate {
             if sender.isSelected {
                 timer.fire()
                 isRecording = true
+                videosButton.isUserInteractionEnabled = false
+                settingsButton.isUserInteractionEnabled = false
             }
             // stop recording
             else {
                 timer.invalidate()
                 stopRecording()
                 isRecording = false
+                videosButton.isUserInteractionEnabled = true
+                settingsButton.isUserInteractionEnabled = true
             }
         } else {
             // Fallback on earlier versions
@@ -74,6 +82,7 @@ class ViewController: UIViewController, FileManagerDelegate {
             if sender.isSelected {
                 timer.fire()
                 isRecording = true
+                videosButton.isUserInteractionEnabled = false
             }
             // stop recording
             else {
@@ -82,7 +91,6 @@ class ViewController: UIViewController, FileManagerDelegate {
                 isRecording = false
             }
         }
-        
     }
     
     private func displayInitialAlert() {
@@ -113,6 +121,8 @@ class ViewController: UIViewController, FileManagerDelegate {
             }
             else {
                 self.saveVideo(videoURL: videoURL!)
+                self.videosButton.isUserInteractionEnabled = true
+                self.settingsButton.isUserInteractionEnabled = true
             }
         })
     }
