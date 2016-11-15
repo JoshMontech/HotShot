@@ -11,4 +11,5 @@ import RealmSwift
 class Video: Object {
     dynamic var fileName = ""
     dynamic var date = NSDate()
+    dynamic var isSaved = false
 }

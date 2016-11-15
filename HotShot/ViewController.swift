@@ -13,7 +13,7 @@ import RealmSwift
 class ViewController: UIViewController, FileManagerDelegate {
     
     @IBOutlet weak var settingsButton: UIButton!
-    @IBOutlet weak var videosButton: UIView!
+    @IBOutlet weak var videosButton: UIButton!
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var controllView: UIView!
     @IBOutlet weak var recordButton: UIButton!
@@ -179,7 +179,7 @@ class ViewController: UIViewController, FileManagerDelegate {
         DispatchQueue.global(qos: .background).async {
             autoreleasepool{
                 let realm = try! Realm()
-                let videos = realm.objects(Video.self).sorted(byProperty: "date")
+                let videos = realm.objects(Video.self).filter("isSaved = false").sorted(byProperty: "date")
                 let maxClips = self.appDelegate.savedClipsNumber
                 let numSavedVids = videos.count
                 
