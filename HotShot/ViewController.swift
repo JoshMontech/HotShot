@@ -55,6 +55,9 @@ class ViewController: UIViewController, FileManagerDelegate {
     }
 
     @IBAction func startRecordingButtonPressed(_ sender: UIButton) {
+        guard cameraManager.cameraIsReady else {
+            return
+        }
         sender.isSelected = !sender.isSelected
         sender.backgroundColor = sender.isSelected ? UIColor.red : config.recordGreen
         if #available(iOS 10.0, *) {
