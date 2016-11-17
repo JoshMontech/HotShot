@@ -14,6 +14,7 @@ class SettingsTableViewController: UITableViewController {
     let logOutCellIdentifier = "SettingsLogoutCell"
     let switchCellIdentifier = "SettingsSwitchCell"
     let showVideoOptionsSegueIdentifier = "ShowVideoOptionsSegue"
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     enum CellTypes {
         case standardCell, switchCell, logoutCell
@@ -167,6 +168,7 @@ class SettingsTableViewController: UITableViewController {
         case (Sections.general.rawValue, GeneralSettings.powerSaving.rawValue):
             let switchCell = self.getCell(cellType: .switchCell) as! SettingsSwitchTableCell
             switchCell.titleLabel.text = "Power Saving Mode"
+            switchCell.settingsSwitch.isOn = appDelegate.powerSavingModeIsOn
             cell = switchCell
         case (Sections.general.rawValue, GeneralSettings.about.rawValue):
             cell = self.getCell(cellType: .standardCell)
@@ -182,11 +184,13 @@ class SettingsTableViewController: UITableViewController {
             cell.textLabel!.text = "Password"
         case (Sections.recording.rawValue, RecordSettings.autoRecord.rawValue):
             let switchCell = self.getCell(cellType: .switchCell) as! SettingsSwitchTableCell
-            switchCell.titleLabel.text = "Auto Record"
+            switchCell.titleLabel.text = "Auto Record at Launch"
+            switchCell.settingsSwitch.isOn = appDelegate.autoRecordAtLaunchIsOn
             cell = switchCell
         case (Sections.recording.rawValue, RecordSettings.speed.rawValue):
             let switchCell = self.getCell(cellType: .switchCell) as! SettingsSwitchTableCell
-            switchCell.titleLabel.text = "Speed Watermark"
+            switchCell.titleLabel.text = "Display Speed"
+            switchCell.settingsSwitch.isOn = appDelegate.shouldShowSpeedInfo
             cell = switchCell
         case (Sections.recording.rawValue, RecordSettings.travelingSpeedUnit.rawValue):
             cell = self.getCell(cellType: .standardCell)
@@ -213,6 +217,11 @@ class SettingsTableViewController: UITableViewController {
             switch indexPath.row {
             case RecordSettings.video.rawValue:
                 performSegue(withIdentifier: showVideoOptionsSegueIdentifier, sender: self)
+            default:
+                return
+            }
+        case Sections.general.rawValue:
+            switch indexPath.row {
             default:
                 return
             }

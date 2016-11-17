@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     fileprivate let kRecordAudioKey = "recordAudio"
     fileprivate let kAutoRecordAtLaunchKey = "autoRecordAtLaunch"
     fileprivate let kPowerSaverKey = "powerSaver"
-    fileprivate let kSpeedWaterMark = "speedWaterMark"
+    fileprivate let kSpeedInfo = "speedInfo"
 
     // MARK: Properties
     var clipLength: Double {
@@ -56,6 +56,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             defaults.synchronize()
         }
     }
+    
+    var autoRecordAtLaunchIsOn: Bool {
+        get {
+            return defaults.bool(forKey: kAutoRecordAtLaunchKey)
+        }
+        set (newVal) {
+            defaults.set(newVal, forKey: kAutoRecordAtLaunchKey)
+            defaults.synchronize()
+        }
+    }
+    
+    var shouldShowSpeedInfo: Bool {
+        get {
+            return defaults.bool(forKey: kSpeedInfo)
+        }
+        set (newVal) {
+            defaults.set(newVal, forKey: kSpeedInfo)
+            defaults.synchronize()
+        }
+    }
+    
+    
+    var powerSavingModeIsOn: Bool {
+        get {
+            return defaults.bool(forKey: kPowerSaverKey)
+        }
+        set (newVal) {
+            defaults.set(newVal, forKey: kPowerSaverKey)
+            defaults.synchronize()
+        }
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // MARK: Set user defautls
@@ -69,7 +100,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             defaults.set(false, forKey: kRecordAudioKey)
             defaults.set(false, forKey: kAutoRecordAtLaunchKey)
             defaults.set(false, forKey: kPowerSaverKey)
-            defaults.set(false, forKey: kSpeedWaterMark)
+            defaults.set(false, forKey: kSpeedInfo)
             defaults.synchronize()
         }
 
