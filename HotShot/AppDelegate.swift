@@ -14,6 +14,7 @@ import Firebase
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var userLoggedIn: Bool?
     // MARK: User Defaults init
     let defaults = UserDefaults.standard
 
@@ -71,7 +72,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
 
-        if (FIRAuth.auth()?.currentUser) == nil {
+        if (FIRAuth.auth()?.currentUser) != nil {
+            userLoggedIn = true
             /*let mainVC = storyboard.instantiateViewController(withIdentifier: "MainVC") as! ViewController
             self.window?.rootViewController = mainVC*/
 
@@ -83,6 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController?.present(navController, animated:true, completion: nil)
 
         } else {
+            userLoggedIn = false
             let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginVC") as! LogInViewController
             self.window?.rootViewController = loginVC
         }

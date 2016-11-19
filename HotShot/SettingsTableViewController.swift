@@ -14,6 +14,7 @@ class SettingsTableViewController: UITableViewController {
     let logOutCellIdentifier = "SettingsLogoutCell"
     let switchCellIdentifier = "SettingsSwitchCell"
     let showVideoOptionsSegueIdentifier = "ShowVideoOptionsSegue"
+    var userLoggedIn = false
     
     enum CellTypes {
         case standardCell, switchCell, logoutCell
@@ -57,12 +58,10 @@ class SettingsTableViewController: UITableViewController {
     }
     
     enum AccountSettings: Int {
-        case email = 0, password, cloud
+        case email = 0, password
         
         var cellType: CellTypes {
             switch self {
-            case .cloud:
-                return CellTypes.standardCell
             case .email:
                 return CellTypes.standardCell
             case .password:
@@ -112,6 +111,12 @@ class SettingsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = false
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        userLoggedIn = appDelegate.userLoggedIn!
+        print(userLoggedIn)
+
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -171,15 +176,24 @@ class SettingsTableViewController: UITableViewController {
         case (Sections.general.rawValue, GeneralSettings.about.rawValue):
             cell = self.getCell(cellType: .standardCell)
             cell.textLabel!.text = "About"
-        case (Sections.account.rawValue, AccountSettings.cloud.rawValue):
-            cell = self.getCell(cellType: .standardCell)
-            cell.textLabel!.text = "Cloud"
         case (Sections.account.rawValue, AccountSettings.email.rawValue):
             cell = self.getCell(cellType: .standardCell)
             cell.textLabel!.text = "Email"
+            if (!userLoggedIn) {
+                cell.isUserInteractionEnabled = false
+                cell.contentView.backgroundColor = UIColor.gray
+
+                cell.backgroundColor = UIColor.gray
+            }
+            
         case (Sections.account.rawValue, AccountSettings.password.rawValue):
             cell = self.getCell(cellType: .standardCell)
             cell.textLabel!.text = "Password"
+            if (!userLoggedIn) {
+                cell.isUserInteractionEnabled = false
+                cell.contentView.backgroundColor = UIColor.gray
+                cell.backgroundColor = UIColor.gray
+            }
         case (Sections.recording.rawValue, RecordSettings.autoRecord.rawValue):
             let switchCell = self.getCell(cellType: .switchCell) as! SettingsSwitchTableCell
             switchCell.titleLabel.text = "Auto Record"
@@ -197,7 +211,11 @@ class SettingsTableViewController: UITableViewController {
         case (Sections.logout.rawValue, 0):
             let logoutCell = self.getCell(cellType: .logoutCell) as! SettingsLogoutTableCell
             logoutCell.logoutLabel.textColor = UIColor.red
-            logoutCell.logoutLabel.text = "Log Out"
+            if (userLoggedIn) {
+                logoutCell.logoutLabel.text = "Log Out"
+            } else {
+                logoutCell.logoutLabel.text = "Log In"
+            }
             cell = logoutCell
         default:
             cell = self.getCell(cellType: .standardCell)
@@ -219,6 +237,8 @@ class SettingsTableViewController: UITableViewController {
         case Sections.logout.rawValue:
             //logout stuff
             try! FIRAuth.auth()!.signOut()
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.userLoggedIn = false
             let loginViewController = self.storyboard!.instantiateViewController(withIdentifier: "LoginVC")
             UIApplication.shared.keyWindow?.rootViewController = loginViewController
         case Sections.account.rawValue:
@@ -239,12 +259,18 @@ class SettingsTableViewController: UITableViewController {
                             let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
                             let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
                             alertController.addAction(defaultAction)
-                            self.present(alertController, animated: true, completion: nil)
+                            self.present(alertController, animated: true, completion: {
+                                alertController.view.superview?.isUserInteractionEnabled = true
+                                alertController.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.alertClose(gesture:))))
+                            })
                         }
                     }
                 }))
 
-                self.present(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: {
+                    alert.view.superview?.isUserInteractionEnabled = true
+                    alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.alertClose(gesture:))))
+                })
 
             case AccountSettings.email.rawValue:
                 let alert = UIAlertController(title: "Update email address", message: "Please enter a new email address", preferredStyle: .alert)
@@ -261,12 +287,18 @@ class SettingsTableViewController: UITableViewController {
                             let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
                             let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
                             alertController.addAction(defaultAction)
-                            self.present(alertController, animated: true, completion: nil)
+                            self.present(alertController, animated: true, completion: {
+                                alertController.view.superview?.isUserInteractionEnabled = true
+                                alertController.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.alertClose(gesture:))))
+                            })
                         }
                     }
                 }))
                 
-                self.present(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: {
+                    alert.view.superview?.isUserInteractionEnabled = true
+                    alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.alertClose(gesture:))))
+                })
 
             default:
                 return
@@ -274,6 +306,10 @@ class SettingsTableViewController: UITableViewController {
         default:
             return
         }
+    }
+    
+    func alertClose(gesture: UITapGestureRecognizer) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -293,5 +329,4 @@ class SettingsTableViewController: UITableViewController {
             return tableView.dequeueReusableCell(withIdentifier: switchCellIdentifier)!
         }
     }
-
 }
