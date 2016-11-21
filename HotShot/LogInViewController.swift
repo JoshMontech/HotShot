@@ -26,6 +26,14 @@ class LogInViewController: UIViewController {
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var password: UITextField!
     
+    @IBAction func skipLogin(_ sender: AnyObject) {
+        let viewController = self.storyboard?.instantiateViewController(withIdentifier: "MainVC") as! ViewController
+        
+        // Creating a navigation controller with viewController at the root of the navigation stack.
+        let navController = UINavigationController(rootViewController: viewController)
+        self.present(navController, animated:true, completion: nil)
+    }
+    
     @IBAction func enterLogIn(_ sender: Any) {
         if email.text == "" || password.text == "" {
             let alertController = UIAlertController(title: "Error", message: "Incorrect Login Info", preferredStyle: .alert)
@@ -51,6 +59,9 @@ class LogInViewController: UIViewController {
                     appDelegate.window?.rootViewController = viewController
                     viewController.present(navController, animated:true, completion: nil)
                     */
+                    
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.userLoggedIn = true
 
                     let viewController = self.storyboard?.instantiateViewController(withIdentifier: "MainVC") as! ViewController
                     
