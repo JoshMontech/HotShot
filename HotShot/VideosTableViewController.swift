@@ -87,11 +87,18 @@ class VideosTableViewController: UITableViewController {
         let videoURL = URL(string: "file:///private\(self.documentDir)/\(video!.fileName)")
         let thumbnail = getVideoPreviewThumbnail(sourceURL: videoURL!)
         
+        var date: Date!
         if indexPath.section == Sections.recent.rawValue {
-            cell.videoNameLabel.text = "Recording \(indexPath.row + 1)"
+            date = recentVideos[indexPath.row].date as Date
         } else {
-            cell.videoNameLabel.text = "Saved Recording \(indexPath.row + 1)"
+            date = savedVideos[indexPath.row].date as Date
         }
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "US_en")
+        dateFormatter.dateFormat = "MMM dd, yyyy HH:mm:ss"
+        let dateString = dateFormatter.string(from: date!)
+        cell.videoNameLabel.text = dateString
+        
         cell.videoPreviewThumbnail.image = thumbnail
         cell.videoURL = videoURL
         
