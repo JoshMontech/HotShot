@@ -136,15 +136,22 @@ class ViewController: UIViewController, FileManagerDelegate {
             return
         }
         
-        cameraManager.stopVideoRecording({ (videoURL, error) -> Void in
-            if let errorOccured = error {
-                self.cameraManager.showErrorBlock("Error occurred", errorOccured.localizedDescription)
-            }
-            else {
-                self.saveVideo(videoURL: videoURL!)
-            }
+        DispatchQueue.global(qos: .background).async {
+            self.cameraManager.stopVideoRecording({ (videoURL, error) -> Void in
+                if let errorOccured = error {
+                    self.cameraManager.showErrorBlock("Error occurred", errorOccured.localizedDescription)
+                }
+                else {
+                    self.saveVideo(videoURL: videoURL!)
+                }
+            })
+        }
+        
+        DispatchQueue.main.async {
             self.cameraManager.startRecordingVideo()
-        })
+        }
+
+        
     }
 
     private func saveVideo(videoURL: URL) {
