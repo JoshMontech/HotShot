@@ -16,6 +16,7 @@ class SettingsTableViewController: UITableViewController {
     let showVideoOptionsSegueIdentifier = "ShowVideoOptionsSegue"
     
     let showAboutSegueIdentifier = "ShowAboutSegue"
+    let speedCellIdentifier = "SpeedCell"
     
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -23,7 +24,7 @@ class SettingsTableViewController: UITableViewController {
     var userLoggedIn = false
 
     enum CellTypes {
-        case standardCell, switchCell, logoutCell
+        case standardCell, switchCell, logoutCell, speedCell
     }
 
     enum Sections: Int {
@@ -212,7 +213,7 @@ class SettingsTableViewController: UITableViewController {
             switchCell.settingsSwitch.isOn = appDelegate.shouldShowSpeedInfo
             cell = switchCell
         case (Sections.recording.rawValue, RecordSettings.travelingSpeedUnit.rawValue):
-            cell = self.getCell(cellType: .standardCell)
+            cell = self.getCell(cellType: .speedCell)
             cell.textLabel?.text = "Speed Unit"
         case (Sections.recording.rawValue, RecordSettings.video.rawValue):
             cell = self.getCell(cellType: .standardCell)
@@ -348,6 +349,8 @@ class SettingsTableViewController: UITableViewController {
             return tableView.dequeueReusableCell(withIdentifier: logOutCellIdentifier)!
         case .switchCell:
             return tableView.dequeueReusableCell(withIdentifier: switchCellIdentifier)!
+        case .speedCell:
+            return tableView.dequeueReusableCell(withIdentifier: speedCellIdentifier)!
         }
     }
 }

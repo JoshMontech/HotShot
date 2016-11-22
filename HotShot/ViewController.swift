@@ -24,16 +24,8 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
     let documentDir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
     let config = Config.sharedInstance
 
-
-
-
-
-
-
-
+    
     @IBOutlet weak var speed: UILabel!
-
-    let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
     let speedMetric = "m/s"
     var locationManager: CLLocationManager!
     var lat = ""
@@ -46,13 +38,6 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
             updateSpeed()
         }
     }
-
-
-
-
-
-
-
 
     var shouldShowWarning = true
     var isRecording = false
@@ -70,15 +55,6 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
         tapRecognizer.numberOfTapsRequired = 2
         tapRecognizer.delegate = self
         cameraView.addGestureRecognizer(tapRecognizer)
-
-
-
-//        label.center = CGPoint(x: 290, y: 60)
-//        label.textAlignment = .right
-//        label.font = UIFont.boldSystemFont(ofSize: 24.0)
-//        label.textColor = UIColor.red
-//        label.text = "00.0" + " " + speedMetric
-//        self.view.addSubview(label)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -86,31 +62,11 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
             displayInitialAlert()
         }
 
-
-
-
-
-
-
         locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         checkCoreLocationPermission()
-        
-        // start the timer
-//        let timerSpeed = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(updateSpeed), userInfo: nil, repeats: true)
-//        
-//        timerSpeed.fire()
-
-
-
-
-
-
     }
-
-
-
 
     func checkCoreLocationPermission() {
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
@@ -124,10 +80,6 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
     }
 
     func updateSpeed() {
-        
-        print("Jake")
-        print(location5?.speed)
-        
         if location5?.speed != nil {
             speed.text = "\(Double(round(10 * location5.speed)/10))" + " m/s"
         }
@@ -153,9 +105,6 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
         locationManager.stopUpdatingLocation() // save batter
     }
 
-
-
-
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = true
         setupCamera()
@@ -179,7 +128,7 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
         if #available(iOS 10.0, *) {
             let timer = Timer.scheduledTimer(timeInterval: 60.0 * appDelegate.clipLength, target: self, selector: #selector(stopAndStartRecording), userInfo: nil, repeats: true)
             
-//            // start the timer
+            // start the timer
             let timerSpeed = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(updateSpeed), userInfo: nil, repeats: true)
             
             
@@ -195,7 +144,6 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
             else {
                 timer.invalidate()
                 timerSpeed.invalidate()
-//                speed.text = "00.0 m/x"
                 stopRecording()
                 isRecording = false
                 videosButton.isUserInteractionEnabled = true
@@ -205,15 +153,19 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
             // Fallback on earlier versions
             // TODO: check if it works on older iOS versions
             let timer = Timer(timeInterval: 60.0 * appDelegate.clipLength, target: self, selector: #selector(stopAndStartRecording), userInfo: nil, repeats: true)
+            // start the timer
+            let timerSpeed = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(updateSpeed), userInfo: nil, repeats: true)
             // start recording
             if sender.isSelected {
                 timer.fire()
+                timerSpeed.fire()
                 isRecording = true
                 videosButton.isUserInteractionEnabled = false
             }
             // stop recording
             else {
                 timer.invalidate()
+                timerSpeed.invalidate()
                 stopRecording()
                 isRecording = false
             }
