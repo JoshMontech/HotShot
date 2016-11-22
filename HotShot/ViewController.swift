@@ -10,7 +10,7 @@ import UIKit
 import CameraManager
 import RealmSwift
 
-class ViewController: UIViewController, FileManagerDelegate {
+class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var videosButton: UIButton!
@@ -27,6 +27,7 @@ class ViewController: UIViewController, FileManagerDelegate {
     
     var shouldShowWarning = true
     var isRecording = false
+    var shouldSaveSegment = false
     
     var startRecordingCount = 1
     var stopRecordingCount = 1
@@ -36,6 +37,10 @@ class ViewController: UIViewController, FileManagerDelegate {
         // Do any additional setup after loading the view, typically from a nib.
         self.controllView.alpha = 0.75
         self.recordButton.backgroundColor = config.recordGreen
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        tapRecognizer.numberOfTapsRequired = 2
+        tapRecognizer.delegate = self
+        cameraView.addGestureRecognizer(tapRecognizer)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -52,6 +57,10 @@ class ViewController: UIViewController, FileManagerDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @objc func handleTap() {
+        self.shouldSaveSegment = true
     }
 
     @IBAction func startRecordingButtonPressed(_ sender: UIButton) {
@@ -170,6 +179,9 @@ class ViewController: UIViewController, FileManagerDelegate {
                 let newVideo = Video()
                 newVideo.fileName = vidFileName
                 newVideo.date = date as NSDate
+                if self.shouldSaveSegment {
+                    newVideo.isSaved = true
+                }
                 try! realm.write {
                     realm.add(newVideo)
                 }
@@ -180,7 +192,11 @@ class ViewController: UIViewController, FileManagerDelegate {
             }
         }
         
-        self.checkAndRemoveSavedSegments()
+        if self.shouldSaveSegment {
+            self.shouldSaveSegment = false
+        } else {
+            self.checkAndRemoveSavedSegments()
+        }
     }
     private func checkAndRemoveSavedSegments() {
         DispatchQueue.global(qos: .background).async {
