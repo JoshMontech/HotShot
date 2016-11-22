@@ -18,12 +18,20 @@ class ViewController: UIViewController, FileManagerDelegate {
     @IBOutlet weak var controllView: UIView!
     @IBOutlet weak var recordButton: UIButton!
     
-    
     let cameraManager = CameraManager()
     let warningMessage = "Please do not interact with the application while operating a vehicle."
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let documentDir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
     let config = Config.sharedInstance
+    
+    
+    
+    
+    let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
+    
+    
+    
+    
     
     var shouldShowWarning = true
     var isRecording = false
@@ -36,6 +44,17 @@ class ViewController: UIViewController, FileManagerDelegate {
         // Do any additional setup after loading the view, typically from a nib.
         self.controllView.alpha = 0.75
         self.recordButton.backgroundColor = config.recordGreen
+        
+        
+
+        label.center = CGPoint(x: 340, y: 50)
+        label.textAlignment = .center
+        label.text = "I'm a test label"
+        self.view.addSubview(label)
+        
+        
+        
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
