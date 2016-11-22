@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="DNQ-ax-xQu">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11535.1" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="DNQ-ax-xQu">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11523"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -26,16 +26,19 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yWI-N0-ZGJ">
                                 <rect key="frame" x="-4" y="44" width="383" height="623"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jXE-Og-4yA">
-                                        <rect key="frame" x="170" y="301" width="42" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="00.0 m/s" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jXE-Og-4yA">
+                                        <rect key="frame" x="203" y="40" width="172" height="37"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                        <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="jXE-Og-4yA" secondAttribute="trailing" constant="8" id="cXR-Vu-Jvc"/>
+                                    <constraint firstItem="jXE-Og-4yA" firstAttribute="top" secondItem="yWI-N0-ZGJ" secondAttribute="top" constant="45" id="msO-Cb-6gd"/>
+                                </constraints>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="D56-ww-5mK" appends="YES" id="GKD-hq-QQt"/>
                                 </connections>
@@ -102,6 +105,7 @@
                         <outlet property="controllView" destination="LUa-1q-85Q" id="EEH-ng-xk6"/>
                         <outlet property="recordButton" destination="pUq-dE-7eq" id="rw8-Qa-IQt"/>
                         <outlet property="settingsButton" destination="xPy-li-l8P" id="0hK-A4-6Qd"/>
+                        <outlet property="speed" destination="jXE-Og-4yA" id="IJH-ph-3UF"/>
                         <outlet property="videosButton" destination="aJ5-Sh-wPS" id="4Yb-BZ-qYw"/>
                     </connections>
                 </viewController>

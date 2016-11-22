@@ -31,6 +31,7 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
 
 
 
+    @IBOutlet weak var speed: UILabel!
 
     let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
     let speedMetric = "m/s"
@@ -72,12 +73,12 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
 
 
 
-        label.center = CGPoint(x: 290, y: 60)
-        label.textAlignment = .right
-        label.font = UIFont.boldSystemFont(ofSize: 24.0)
-        label.textColor = UIColor.red
-        label.text = "00.0" + " " + speedMetric
-        self.view.addSubview(label)
+//        label.center = CGPoint(x: 290, y: 60)
+//        label.textAlignment = .right
+//        label.font = UIFont.boldSystemFont(ofSize: 24.0)
+//        label.textColor = UIColor.red
+//        label.text = "00.0" + " " + speedMetric
+//        self.view.addSubview(label)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -95,6 +96,11 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         checkCoreLocationPermission()
+        
+        // start the timer
+//        let timerSpeed = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(updateSpeed), userInfo: nil, repeats: true)
+//        
+//        timerSpeed.fire()
 
 
 
@@ -118,6 +124,16 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
     }
 
     func updateSpeed() {
+        
+        print("Jake")
+        print(location5?.speed)
+        
+        if location5?.speed != nil {
+            speed.text = "\(Double(round(10 * location5.speed)/10))" + " m/s"
+        }
+        else {
+            speed.text = "00.0 m/s"
+        }
 //        let x = unitSelect.titleForSegment(at: unitSelect.selectedSegmentIndex)!
 //
 //        if x == "mile/hr" {
@@ -162,9 +178,15 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
         sender.backgroundColor = sender.isSelected ? UIColor.red : config.recordGreen
         if #available(iOS 10.0, *) {
             let timer = Timer.scheduledTimer(timeInterval: 60.0 * appDelegate.clipLength, target: self, selector: #selector(stopAndStartRecording), userInfo: nil, repeats: true)
+            
+//            // start the timer
+            let timerSpeed = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(updateSpeed), userInfo: nil, repeats: true)
+            
+            
             // start recording
             if sender.isSelected {
                 timer.fire()
+                timerSpeed.fire()
                 isRecording = true
                 videosButton.isUserInteractionEnabled = false
                 settingsButton.isUserInteractionEnabled = false
@@ -172,6 +194,8 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
             // stop recording
             else {
                 timer.invalidate()
+                timerSpeed.invalidate()
+//                speed.text = "00.0 m/x"
                 stopRecording()
                 isRecording = false
                 videosButton.isUserInteractionEnabled = true
