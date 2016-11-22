@@ -9,8 +9,9 @@
 import UIKit
 import CameraManager
 import RealmSwift
+import CoreLocation
 
-class ViewController: UIViewController, FileManagerDelegate {
+class ViewController: UIViewController, FileManagerDelegate, CLLocationManagerDelegate {
     
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var videosButton: UIButton!
@@ -27,7 +28,27 @@ class ViewController: UIViewController, FileManagerDelegate {
     
     
     
+    
+    
+    
+    
+    
     let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
+    let speedMetric = "m/s"
+    var locationManager: CLLocationManager!
+    var lat = ""
+    var long = ""
+    
+    var location5: CLLocation! {
+        didSet {
+            lat = "\(location5.coordinate.latitude)"
+            long = "\(location5.coordinate.longitude)"
+            updateSpeed()
+        }
+    }
+    
+    
+    
     
     
     
@@ -47,9 +68,11 @@ class ViewController: UIViewController, FileManagerDelegate {
         
         
 
-        label.center = CGPoint(x: 340, y: 50)
-        label.textAlignment = .center
-        label.text = "I'm a test label"
+        label.center = CGPoint(x: 290, y: 60)
+        label.textAlignment = .right
+        label.font = UIFont.boldSystemFont(ofSize: 24.0)
+        label.textColor = UIColor.red
+        label.text = "00.0" + " " + speedMetric
         self.view.addSubview(label)
         
         
@@ -61,7 +84,61 @@ class ViewController: UIViewController, FileManagerDelegate {
         if shouldShowWarning {
             displayInitialAlert()
         }
+        
+        
+        
+        
+        
+        
+        
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        checkCoreLocationPermission()
+        
+        
+        
+        
+        
+        
     }
+    
+    
+    
+    
+    func checkCoreLocationPermission() {
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+            locationManager.startUpdatingLocation()
+        } else if CLLocationManager.authorizationStatus() == .notDetermined {
+            locationManager.requestWhenInUseAuthorization()
+        } else if CLLocationManager.authorizationStatus() == .restricted {
+            // print alert
+            print("unauthorized to use location service")
+        }
+    }
+    
+    func updateSpeed() {
+//        let x = unitSelect.titleForSegment(at: unitSelect.selectedSegmentIndex)!
+//        
+//        if x == "mile/hr" {
+//            speed.text = "\(Double(round(10 * location5.speed / 2.23694)/10))"
+//            unit.text = "mile/hr"
+//        } else if x == "km/hr" {
+//            speed.text = "\(Double(round(10 * location5.speed / 3.6)/10))"
+//            unit.text = "km/hr"
+//        } else {
+//            speed.text = "\(Double(round(10 * location5.speed)/10))"
+//            unit.text = "meter/sec"
+//        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        location5 = (locations).last
+        locationManager.stopUpdatingLocation() // save batter
+    }
+    
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = true

@@ -26,6 +26,7 @@
 		31F4F4491DDBA645003BEA7C /* NotificationKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31F4F4481DDBA645003BEA7C /* NotificationKeys.swift */; };
 		953251FC1DB6F60D008CA39F /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953251FB1DB6F60D008CA39F /* LogInViewController.swift */; };
 		953251FE1DB6F989008CA39F /* NewUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953251FD1DB6F989008CA39F /* NewUserViewController.swift */; };
+		9546D59B1DE3F26B006FFE72 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9546D59A1DE3F26B006FFE72 /* CoreLocation.framework */; };
 		955714921DB57D0100ED6E8B /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955714911DB57D0000ED6E8B /* SettingsTableViewController.swift */; };
 		A87476E7D2C969E5EF89D116 /* Pods_HotShot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3219A1C931CEF0AD0541534 /* Pods_HotShot.framework */; };
 		D0AFB7241DB9A7B900D177DC /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0AFB7231DB9A7B900D177DC /* AVFoundation.framework */; };
@@ -56,6 +57,7 @@
 		6E9BBC35FA5F8A7E812C454A /* Pods-HotShot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HotShot.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HotShot/Pods-HotShot.debug.xcconfig"; sourceTree = "<group>"; };
 		953251FB1DB6F60D008CA39F /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		953251FD1DB6F989008CA39F /* NewUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewUserViewController.swift; sourceTree = "<group>"; };
+		9546D59A1DE3F26B006FFE72 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		955714911DB57D0000ED6E8B /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		C0C2F9758567CEAD58DB88E5 /* Pods-HotShot.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HotShot.release.xcconfig"; path = "Pods/Target Support Files/Pods-HotShot/Pods-HotShot.release.xcconfig"; sourceTree = "<group>"; };
 		C3219A1C931CEF0AD0541534 /* Pods_HotShot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HotShot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9546D59B1DE3F26B006FFE72 /* CoreLocation.framework in Frameworks */,
 				D0AFB7261DB9A7C100D177DC /* AVKit.framework in Frameworks */,
 				D0AFB7241DB9A7B900D177DC /* AVFoundation.framework in Frameworks */,
 				A87476E7D2C969E5EF89D116 /* Pods_HotShot.framework in Frameworks */,
@@ -81,6 +84,7 @@
 		0CF9E209493A5994481EBCC7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9546D59A1DE3F26B006FFE72 /* CoreLocation.framework */,
 				D0AFB7251DB9A7C100D177DC /* AVKit.framework */,
 				D0AFB7231DB9A7B900D177DC /* AVFoundation.framework */,
 				C3219A1C931CEF0AD0541534 /* Pods_HotShot.framework */,

@@ -248,7 +248,6 @@ class SettingsTableViewController: UITableViewController {
                 
                 
             case GeneralSettings.about.rawValue:
-                print("Jake")
                 performSegue(withIdentifier: showAboutSegueIdentifier, sender: self)
                 
                 

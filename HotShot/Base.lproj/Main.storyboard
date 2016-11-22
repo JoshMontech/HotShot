@@ -330,9 +330,6 @@
                                     <color key="backgroundColor" red="0.85490196080000003" green="0.74117647060000003" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.85490196080000003" green="0.74117647060000003" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <segue destination="e2I-Sb-j6E" kind="show" identifier="ShowAboutSegue" id="a5h-kf-EUJ"/>
-                                </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SettingsSwitchCell" id="WtJ-ii-QQa" customClass="SettingsSwitchTableCell" customModule="HotShot" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="100" width="375" height="44"/>
@@ -401,6 +398,7 @@
                     </tableView>
                     <connections>
                         <segue destination="0Mf-HY-dDp" kind="show" identifier="ShowVideoOptionsSegue" id="VR3-al-ZqE"/>
+                        <segue destination="e2I-Sb-j6E" kind="show" identifier="ShowAboutSegue" id="i43-4I-2KC"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c3e-3o-TGY" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -570,27 +568,24 @@
                                     <constraint firstAttribute="width" secondItem="gTU-Wl-U9Y" secondAttribute="height" multiplier="343:345" id="phU-Q1-Plj"/>
                                 </constraints>
                             </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="E44-kq-ep1">
-                                <rect key="frame" x="143" y="388" width="89" height="21"/>
-                            </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="This is the about page for Hot Shot. The three memebers are Josh, Jerry and Jake. This project is for Bulko's IOS class." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gx2-qZ-327">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4o7-Pq-wL7">
                                 <rect key="frame" x="16" y="417" width="343" height="230"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <color key="backgroundColor" red="0.96481722593307495" green="0.68459832668304443" blue="0.21278908848762512" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <string key="text">HotShot was developed by Jerry, Josh and Jake. Frameworks used are Realm and FireBase. Hotshot is a phone dashcam that loop records video and only saves clips the user decides to save. Do not interact with your phone while driving. HotShot does not provide any physical protection for the driver. </string>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" red="0.96481722589999996" green="0.68459832669999998" blue="0.2127890885" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="gTU-Wl-U9Y" firstAttribute="centerX" secondItem="dcD-uq-W2Q" secondAttribute="centerX" id="2JT-KG-UEZ"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Gx2-qZ-327" secondAttribute="trailing" id="5iv-eX-0z3"/>
-                            <constraint firstItem="Gx2-qZ-327" firstAttribute="centerX" secondItem="dcD-uq-W2Q" secondAttribute="centerX" id="9e5-hI-kbg"/>
-                            <constraint firstItem="E44-kq-ep1" firstAttribute="centerX" secondItem="dcD-uq-W2Q" secondAttribute="centerX" id="PwI-18-ddF"/>
-                            <constraint firstItem="Gx2-qZ-327" firstAttribute="top" secondItem="gTU-Wl-U9Y" secondAttribute="bottom" constant="8" id="Snc-vt-Jrx"/>
+                            <constraint firstItem="8gm-54-pJ1" firstAttribute="top" secondItem="4o7-Pq-wL7" secondAttribute="bottom" constant="20" id="9dv-ze-Y96"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="4o7-Pq-wL7" secondAttribute="leading" id="BTn-da-zob"/>
+                            <constraint firstItem="4o7-Pq-wL7" firstAttribute="centerX" secondItem="dcD-uq-W2Q" secondAttribute="centerX" id="EFg-bL-Dyk"/>
                             <constraint firstItem="gTU-Wl-U9Y" firstAttribute="leading" secondItem="dcD-uq-W2Q" secondAttribute="leadingMargin" id="TZT-aX-PYX"/>
                             <constraint firstItem="gTU-Wl-U9Y" firstAttribute="top" secondItem="wdT-lP-znc" secondAttribute="bottom" id="UPq-Jf-mdT"/>
+                            <constraint firstItem="4o7-Pq-wL7" firstAttribute="top" secondItem="gTU-Wl-U9Y" secondAttribute="bottom" constant="8" id="eCU-0b-9ca"/>
                             <constraint firstItem="gTU-Wl-U9Y" firstAttribute="trailing" secondItem="dcD-uq-W2Q" secondAttribute="trailingMargin" id="fzl-4j-nRI"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="Gx2-qZ-327" secondAttribute="leading" id="rTW-Yz-w4b"/>
                         </constraints>
                     </view>
                 </viewController>
