@@ -14,6 +14,10 @@ class SettingsTableViewController: UITableViewController {
     let logOutCellIdentifier = "SettingsLogoutCell"
     let switchCellIdentifier = "SettingsSwitchCell"
     let showVideoOptionsSegueIdentifier = "ShowVideoOptionsSegue"
+    
+    let showAboutSegueIdentifier = "ShowAboutSegue"
+    
+    
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
     var userLoggedIn = false
@@ -241,6 +245,13 @@ class SettingsTableViewController: UITableViewController {
             }
         case Sections.general.rawValue:
             switch indexPath.row {
+                
+                
+            case GeneralSettings.about.rawValue:
+                performSegue(withIdentifier: showAboutSegueIdentifier, sender: self)
+                
+                
+                
             default:
                 return
             }

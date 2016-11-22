@@ -25,6 +25,15 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yWI-N0-ZGJ">
                                 <rect key="frame" x="-4" y="44" width="383" height="623"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jXE-Og-4yA">
+                                        <rect key="frame" x="170" y="301" width="42" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <connections>
@@ -270,7 +279,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                         </subviews>
-                        <color key="backgroundColor" red="0.94901960784313721" green="0.62352941176470589" blue="0.16470588235294117" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.96481722593307495" green="0.68459832668304443" blue="0.21278908848762512" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Ycj-9r-4ES" secondAttribute="trailing" id="0MT-Ej-aBl"/>
                             <constraint firstItem="zJE-dC-san" firstAttribute="top" secondItem="WNW-iI-DkS" secondAttribute="bottom" constant="8" id="2Z4-eT-mLM"/>
@@ -305,7 +314,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xum-dN-A1m" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-687" y="1072"/>
+            <point key="canvasLocation" x="-687" y="1116"/>
         </scene>
         <!--Settings Table View Controller-->
         <scene sceneID="xzT-xn-wPB">
@@ -344,13 +353,13 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e1Z-9T-9Ry">
-                                            <rect key="frame" x="15" y="11" width="34" height="21"/>
+                                            <rect key="frame" x="15" y="11.5" width="33.5" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rV7-nM-b0u">
-                                            <rect key="frame" x="311" y="7" width="51" height="31"/>
+                                            <rect key="frame" x="311" y="6.5" width="51" height="31"/>
                                             <connections>
                                                 <action selector="switchValueChanged:" destination="WtJ-ii-QQa" eventType="valueChanged" id="9j3-ax-WGD"/>
                                             </connections>
@@ -403,6 +412,7 @@
                     </tableView>
                     <connections>
                         <segue destination="0Mf-HY-dDp" kind="show" identifier="ShowVideoOptionsSegue" id="VR3-al-ZqE"/>
+                        <segue destination="e2I-Sb-j6E" kind="show" identifier="ShowAboutSegue" id="i43-4I-2KC"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c3e-3o-TGY" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -439,7 +449,7 @@
                                 <rect key="frame" x="0.0" y="72" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="AA8-yh-WKn" id="xJH-Wn-jzz">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ov1-8i-oMa">
@@ -553,6 +563,49 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iLU-dP-Vby" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="223" y="692"/>
+        </scene>
+        <!--New User View Controller-->
+        <scene sceneID="uX9-RH-G4o">
+            <objects>
+                <viewController id="e2I-Sb-j6E" customClass="NewUserViewController" customModule="HotShot" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wdT-lP-znc"/>
+                        <viewControllerLayoutGuide type="bottom" id="8gm-54-pJ1"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dcD-uq-W2Q">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="flame" translatesAutoresizingMaskIntoConstraints="NO" id="gTU-Wl-U9Y">
+                                <rect key="frame" x="16" y="64" width="343" height="345"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="gTU-Wl-U9Y" secondAttribute="height" multiplier="343:345" id="phU-Q1-Plj"/>
+                                </constraints>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4o7-Pq-wL7">
+                                <rect key="frame" x="16" y="417" width="343" height="230"/>
+                                <color key="backgroundColor" red="0.96481722593307495" green="0.68459832668304443" blue="0.21278908848762512" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <string key="text">HotShot was developed by Jerry, Josh and Jake. Frameworks used are Realm and FireBase. Hotshot is a phone dashcam that loop records video and only saves clips the user decides to save. Do not interact with your phone while driving. HotShot does not provide any physical protection for the driver. </string>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.96481722589999996" green="0.68459832669999998" blue="0.2127890885" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="gTU-Wl-U9Y" firstAttribute="centerX" secondItem="dcD-uq-W2Q" secondAttribute="centerX" id="2JT-KG-UEZ"/>
+                            <constraint firstItem="8gm-54-pJ1" firstAttribute="top" secondItem="4o7-Pq-wL7" secondAttribute="bottom" constant="20" id="9dv-ze-Y96"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="4o7-Pq-wL7" secondAttribute="leading" id="BTn-da-zob"/>
+                            <constraint firstItem="4o7-Pq-wL7" firstAttribute="centerX" secondItem="dcD-uq-W2Q" secondAttribute="centerX" id="EFg-bL-Dyk"/>
+                            <constraint firstItem="gTU-Wl-U9Y" firstAttribute="leading" secondItem="dcD-uq-W2Q" secondAttribute="leadingMargin" id="TZT-aX-PYX"/>
+                            <constraint firstItem="gTU-Wl-U9Y" firstAttribute="top" secondItem="wdT-lP-znc" secondAttribute="bottom" id="UPq-Jf-mdT"/>
+                            <constraint firstItem="4o7-Pq-wL7" firstAttribute="top" secondItem="gTU-Wl-U9Y" secondAttribute="bottom" constant="8" id="eCU-0b-9ca"/>
+                            <constraint firstItem="gTU-Wl-U9Y" firstAttribute="trailing" secondItem="dcD-uq-W2Q" secondAttribute="trailingMargin" id="fzl-4j-nRI"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DPs-pY-hfi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2620" y="1748.2758620689656"/>
         </scene>
     </scenes>
     <resources>

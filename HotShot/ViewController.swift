@@ -9,29 +9,57 @@
 import UIKit
 import CameraManager
 import RealmSwift
+import CoreLocation
 
-class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizerDelegate {
-    
+class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var videosButton: UIButton!
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var controllView: UIView!
     @IBOutlet weak var recordButton: UIButton!
-    
-    
+
     let cameraManager = CameraManager()
     let warningMessage = "Please do not interact with the application while operating a vehicle."
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let documentDir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
     let config = Config.sharedInstance
-    
+
+
+
+
+
+
+
+
+
+    let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
+    let speedMetric = "m/s"
+    var locationManager: CLLocationManager!
+    var lat = ""
+    var long = ""
+
+    var location5: CLLocation! {
+        didSet {
+            lat = "\(location5.coordinate.latitude)"
+            long = "\(location5.coordinate.longitude)"
+            updateSpeed()
+        }
+    }
+
+
+
+
+
+
+
+
     var shouldShowWarning = true
     var isRecording = false
     var shouldSaveSegment = false
-    
+
     var startRecordingCount = 1
     var stopRecordingCount = 1
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -41,14 +69,77 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
         tapRecognizer.numberOfTapsRequired = 2
         tapRecognizer.delegate = self
         cameraView.addGestureRecognizer(tapRecognizer)
+
+
+
+        label.center = CGPoint(x: 290, y: 60)
+        label.textAlignment = .right
+        label.font = UIFont.boldSystemFont(ofSize: 24.0)
+        label.textColor = UIColor.red
+        label.text = "00.0" + " " + speedMetric
+        self.view.addSubview(label)
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         if shouldShowWarning {
             displayInitialAlert()
         }
+
+
+
+
+
+
+
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        checkCoreLocationPermission()
+
+
+
+
+
+
     }
-    
+
+
+
+
+    func checkCoreLocationPermission() {
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+            locationManager.startUpdatingLocation()
+        } else if CLLocationManager.authorizationStatus() == .notDetermined {
+            locationManager.requestWhenInUseAuthorization()
+        } else if CLLocationManager.authorizationStatus() == .restricted {
+            // print alert
+            print("unauthorized to use location service")
+        }
+    }
+
+    func updateSpeed() {
+//        let x = unitSelect.titleForSegment(at: unitSelect.selectedSegmentIndex)!
+//
+//        if x == "mile/hr" {
+//            speed.text = "\(Double(round(10 * location5.speed / 2.23694)/10))"
+//            unit.text = "mile/hr"
+//        } else if x == "km/hr" {
+//            speed.text = "\(Double(round(10 * location5.speed / 3.6)/10))"
+//            unit.text = "km/hr"
+//        } else {
+//            speed.text = "\(Double(round(10 * location5.speed)/10))"
+//            unit.text = "meter/sec"
+//        }
+    }
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        location5 = (locations).last
+        locationManager.stopUpdatingLocation() // save batter
+    }
+
+
+
+
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = true
         setupCamera()
@@ -58,7 +149,7 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
     @objc func handleTap() {
         self.shouldSaveSegment = true
     }
@@ -104,28 +195,28 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
             }
         }
     }
-    
+
     private func displayInitialAlert() {
         let alertController = UIAlertController(title: "Warning", message: warningMessage, preferredStyle: .alert)
         let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alertController.addAction(defaultAction)
         self.present(alertController, animated: true, completion: nil)
-        
+
         shouldShowWarning = false
     }
-    
+
     private func setupCamera() {
         let outputMode = appDelegate.shouldRecordAudio ? CameraOutputMode.videoWithMic : CameraOutputMode.videoOnly
         let _ = cameraManager.addPreviewLayerToView(self.cameraView, newCameraOutputMode: outputMode)
         cameraManager.showErrorBlock = { [weak self] (erTitle: String, erMessage: String) -> Void in
             let alertController = UIAlertController(title: erTitle, message: erMessage, preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (alertAction) -> Void in  }))
-            
+
             self?.present(alertController, animated: true, completion: nil)
         }
         cameraManager.writeFilesToPhoneLibrary = false
     }
-    
+
     private func stopRecording() {
         cameraManager.stopVideoRecording({ (videoURL, error) -> Void in
             if let errorOccured = error {
@@ -138,13 +229,13 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
             }
         })
     }
-    
+
     @objc private func stopAndStartRecording() {
         guard isRecording else {
             self.cameraManager.startRecordingVideo()
             return
         }
-        
+
         DispatchQueue.global(qos: .background).async {
             self.cameraManager.stopVideoRecording({ (videoURL, error) -> Void in
                 if let errorOccured = error {
@@ -155,12 +246,12 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
                 }
             })
         }
-        
+
         DispatchQueue.main.async {
             self.cameraManager.startRecordingVideo()
         }
 
-        
+
     }
 
     private func saveVideo(videoURL: URL) {
@@ -172,7 +263,7 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
         let dateString = dateFormatter.string(from: date)
         let savedDocPath = "\(self.documentDir)/\(dateString).mp4"
         let vidFileName = "\(dateString).mp4"
-        
+
         if let savedDocURL = URL(string: "file:///private\(savedDocPath)") {
             do {
                 try FileManager.default.copyItem(at: videoURL, to: savedDocURL)
@@ -191,7 +282,7 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
                 NSLog(error.localizedDescription)
             }
         }
-        
+
         if self.shouldSaveSegment {
             self.shouldSaveSegment = false
         } else {
@@ -205,13 +296,13 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
                 let videos = realm.objects(Video.self).filter("isSaved = false").sorted(byProperty: "date")
                 let maxClips = self.appDelegate.savedClipsNumber
                 let numSavedVids = videos.count
-                
+
                 if maxClips < numSavedVids {
                     var toBeDeletedVideos = [Video]()
                     for i in 0..<numSavedVids - maxClips {
                         toBeDeletedVideos.append(videos[i])
                     }
-                    
+
                     for video in toBeDeletedVideos {
                         do {
                             let vidUrl = "\(self.documentDir)/\(video.fileName)"
@@ -230,4 +321,3 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
         }
     }
 }
-
