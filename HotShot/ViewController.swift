@@ -37,6 +37,10 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
         tapRecognizer.numberOfTapsRequired = 2
         tapRecognizer.delegate = self
         cameraView.addGestureRecognizer(tapRecognizer)
+        
+        if appDelegate.autoRecordAtLaunchIsOn {
+            self.startRecordingButtonPressed(self.recordButton)
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {

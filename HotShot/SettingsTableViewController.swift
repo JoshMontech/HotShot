@@ -14,8 +14,8 @@ class SettingsTableViewController: UITableViewController {
     let logOutCellIdentifier = "SettingsLogoutCell"
     let switchCellIdentifier = "SettingsSwitchCell"
     let showVideoOptionsSegueIdentifier = "ShowVideoOptionsSegue"
-    
     let showAboutSegueIdentifier = "ShowAboutSegue"
+    let config = Config.sharedInstance
     
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -177,7 +177,7 @@ class SettingsTableViewController: UITableViewController {
         switch indexValue {
         case (Sections.general.rawValue, GeneralSettings.powerSaving.rawValue):
             let switchCell = self.getCell(cellType: .switchCell) as! SettingsSwitchTableCell
-            switchCell.titleLabel.text = "Power Saving Mode"
+            switchCell.titleLabel.text = config.settingsPowerSaverTitle
             switchCell.settingsSwitch.isOn = appDelegate.powerSavingModeIsOn
             cell = switchCell
         case (Sections.general.rawValue, GeneralSettings.about.rawValue):
@@ -203,12 +203,12 @@ class SettingsTableViewController: UITableViewController {
             }
         case (Sections.recording.rawValue, RecordSettings.autoRecord.rawValue):
             let switchCell = self.getCell(cellType: .switchCell) as! SettingsSwitchTableCell
-            switchCell.titleLabel.text = "Auto Record at Launch"
+            switchCell.titleLabel.text = config.settingsAutoRecordTitle
             switchCell.settingsSwitch.isOn = appDelegate.autoRecordAtLaunchIsOn
             cell = switchCell
         case (Sections.recording.rawValue, RecordSettings.speed.rawValue):
             let switchCell = self.getCell(cellType: .switchCell) as! SettingsSwitchTableCell
-            switchCell.titleLabel.text = "Display Speed"
+            switchCell.titleLabel.text = config.settingsDisplaySpeedTitle
             switchCell.settingsSwitch.isOn = appDelegate.shouldShowSpeedInfo
             cell = switchCell
         case (Sections.recording.rawValue, RecordSettings.travelingSpeedUnit.rawValue):
