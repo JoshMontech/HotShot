@@ -23,7 +23,6 @@
 		31E37E781D9F1EFB00DB93B7 /* HotShot.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 31E37E761D9F1EFB00DB93B7 /* HotShot.xcdatamodeld */; };
 		31E37E7A1D9F1EFB00DB93B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31E37E791D9F1EFB00DB93B7 /* Assets.xcassets */; };
 		31E37E7D1D9F1EFB00DB93B7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31E37E7B1D9F1EFB00DB93B7 /* LaunchScreen.storyboard */; };
-		31F4F4491DDBA645003BEA7C /* NotificationKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31F4F4481DDBA645003BEA7C /* NotificationKeys.swift */; };
 		953251FC1DB6F60D008CA39F /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953251FB1DB6F60D008CA39F /* LogInViewController.swift */; };
 		953251FE1DB6F989008CA39F /* NewUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953251FD1DB6F989008CA39F /* NewUserViewController.swift */; };
 		9546D59B1DE3F26B006FFE72 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9546D59A1DE3F26B006FFE72 /* CoreLocation.framework */; };
@@ -53,7 +52,6 @@
 		31E37E791D9F1EFB00DB93B7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		31E37E7C1D9F1EFB00DB93B7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		31E37E7E1D9F1EFB00DB93B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		31F4F4481DDBA645003BEA7C /* NotificationKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationKeys.swift; sourceTree = "<group>"; };
 		6E9BBC35FA5F8A7E812C454A /* Pods-HotShot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HotShot.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HotShot/Pods-HotShot.debug.xcconfig"; sourceTree = "<group>"; };
 		953251FB1DB6F60D008CA39F /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		953251FD1DB6F989008CA39F /* NewUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewUserViewController.swift; sourceTree = "<group>"; };
@@ -149,7 +147,6 @@
 				31C656C31DCA4C6900735CDF /* Config.swift */,
 				31C656B91DC8FFC600735CDF /* VideoLengthOptions.swift */,
 				31C656BB1DC9000300735CDF /* SavedTempVideoNumberOptions.swift */,
-				31F4F4481DDBA645003BEA7C /* NotificationKeys.swift */,
 				31C1F8361DADD96F0005BC5B /* Video.swift */,
 			);
 			path = HotShot;
@@ -303,7 +300,6 @@
 				953251FE1DB6F989008CA39F /* NewUserViewController.swift in Sources */,
 				31C656C01DC9048C00735CDF /* SettingsSegmentedControlTableCell.swift in Sources */,
 				31C656C21DC9441A00735CDF /* SettingsLogoutTableCell.swift in Sources */,
-				31F4F4491DDBA645003BEA7C /* NotificationKeys.swift in Sources */,
 				31C656BC1DC9000300735CDF /* SavedTempVideoNumberOptions.swift in Sources */,
 				315C3E481DAD723500AAEC9D /* VideosTableViewController.swift in Sources */,
 			);
