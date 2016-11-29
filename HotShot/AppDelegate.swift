@@ -90,9 +90,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // MARK: Set user defautls
         FIRApp.configure()
-
+        // Disable screen from timing out
+        UIApplication.shared.isIdleTimerDisabled = true
+        
+        // MARK: Set user defautls
         // check if it's the first app launch
         if !defaults.bool(forKey: kFirstTimeLaunchKey) {
             defaults.set(true, forKey: kFirstTimeLaunchKey)
