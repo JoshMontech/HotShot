@@ -12,6 +12,7 @@ import RealmSwift
 import CoreLocation
 
 public var speedMetric = ""
+public var showSpeed = 1
 
 class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
     @IBOutlet weak var settingsButton: UIButton!
@@ -82,7 +83,9 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
     }
 
     func updateSpeed() {
-        if speedMetric == "m/h" {
+        if showSpeed == 0 {
+            speed.text = ""
+        } else if speedMetric == "m/h" {
             speed.text = "\(Double(round(10 * location5.speed / 2.23694)/10))" + " m/h"
   
         } else if speedMetric == "km/h" {
