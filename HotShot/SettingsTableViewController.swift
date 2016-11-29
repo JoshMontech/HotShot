@@ -210,7 +210,7 @@ class SettingsTableViewController: UITableViewController {
         case (Sections.recording.rawValue, RecordSettings.speed.rawValue):
             let switchCell = self.getCell(cellType: .switchCell) as! SettingsSwitchTableCell
             switchCell.titleLabel.text = "Display Speed"
-            switchCell.settingsSwitch.isOn = appDelegate.shouldShowSpeedInfo
+            switchCell.settingsSwitch.isOn = Bool(showSpeed as NSNumber)
             cell = switchCell
         case (Sections.recording.rawValue, RecordSettings.speedUnit.rawValue):
             let speedCell = self.getCell(cellType: .speedCell) as! SettingsSpeedCell

@@ -14,7 +14,12 @@ class SettingsSwitchTableCell: UITableViewCell {
     @IBOutlet weak var settingsSwitch: UISwitch!
     
     @IBAction func switchValueChanged(_ sender: UISwitch) {
-        print("Jake")
+        
+        if titleLabel.text == "Display Speed" && showSpeed == 1 {
+            showSpeed = 0
+        } else if titleLabel.text == "Display Speed" && showSpeed == 0 {
+            showSpeed = 1
+        }
     }
     
 }
