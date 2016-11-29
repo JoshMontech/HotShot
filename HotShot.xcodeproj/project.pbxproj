@@ -28,6 +28,7 @@
 		953251FE1DB6F989008CA39F /* NewUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953251FD1DB6F989008CA39F /* NewUserViewController.swift */; };
 		9546D59B1DE3F26B006FFE72 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9546D59A1DE3F26B006FFE72 /* CoreLocation.framework */; };
 		955714921DB57D0100ED6E8B /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955714911DB57D0000ED6E8B /* SettingsTableViewController.swift */; };
+		957C1BA41DED06B700772A3F /* SettingsSpeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957C1BA31DED06B700772A3F /* SettingsSpeedCell.swift */; };
 		A87476E7D2C969E5EF89D116 /* Pods_HotShot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3219A1C931CEF0AD0541534 /* Pods_HotShot.framework */; };
 		D0AFB7241DB9A7B900D177DC /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0AFB7231DB9A7B900D177DC /* AVFoundation.framework */; };
 		D0AFB7261DB9A7C100D177DC /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0AFB7251DB9A7C100D177DC /* AVKit.framework */; };
@@ -59,6 +60,7 @@
 		953251FD1DB6F989008CA39F /* NewUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewUserViewController.swift; sourceTree = "<group>"; };
 		9546D59A1DE3F26B006FFE72 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		955714911DB57D0000ED6E8B /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		957C1BA31DED06B700772A3F /* SettingsSpeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSpeedCell.swift; sourceTree = "<group>"; };
 		C0C2F9758567CEAD58DB88E5 /* Pods-HotShot.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HotShot.release.xcconfig"; path = "Pods/Target Support Files/Pods-HotShot/Pods-HotShot.release.xcconfig"; sourceTree = "<group>"; };
 		C3219A1C931CEF0AD0541534 /* Pods_HotShot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HotShot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0AFB7231DB9A7B900D177DC /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -112,6 +114,7 @@
 				3108F8BD1DAD7AC60074DB75 /* VideoTableCell.swift */,
 				31C656BD1DC9044600735CDF /* SettingsSwitchTableCell.swift */,
 				31C656BF1DC9048C00735CDF /* SettingsSegmentedControlTableCell.swift */,
+				957C1BA31DED06B700772A3F /* SettingsSpeedCell.swift */,
 			);
 			name = TableCells;
 			sourceTree = "<group>";
@@ -199,7 +202,7 @@
 				TargetAttributes = {
 					31E37E6B1D9F1EFB00DB93B7 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = BFSG8QA8PX;
+						DevelopmentTeam = NH2G7K5PFP;
 						LastSwiftMigration = 0810;
 					};
 				};
@@ -297,6 +300,7 @@
 				953251FC1DB6F60D008CA39F /* LogInViewController.swift in Sources */,
 				3108F8BE1DAD7AC60074DB75 /* VideoTableCell.swift in Sources */,
 				31C656BA1DC8FFC600735CDF /* VideoLengthOptions.swift in Sources */,
+				957C1BA41DED06B700772A3F /* SettingsSpeedCell.swift in Sources */,
 				31C656BE1DC9044600735CDF /* SettingsSwitchTableCell.swift in Sources */,
 				31E37E781D9F1EFB00DB93B7 /* HotShot.xcdatamodeld in Sources */,
 				31C656C81DCA663B00735CDF /* RecordingSettingsTableViewController.swift in Sources */,
@@ -425,7 +429,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = BFSG8QA8PX;
+				DEVELOPMENT_TEAM = NH2G7K5PFP;
 				INFOPLIST_FILE = HotShot/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jerrypon.HotShot;
@@ -440,7 +444,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = BFSG8QA8PX;
+				DEVELOPMENT_TEAM = NH2G7K5PFP;
 				INFOPLIST_FILE = HotShot/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jerrypon.HotShot;

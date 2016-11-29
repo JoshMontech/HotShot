@@ -47,7 +47,7 @@
                                 <rect key="frame" x="-4" y="567" width="383" height="100"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pUq-dE-7eq">
-                                        <rect key="frame" x="151.5" y="10" width="80" height="80"/>
+                                        <rect key="frame" x="152" y="10" width="80" height="80"/>
                                         <color key="backgroundColor" red="0.25098040700000002" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="80" id="LZF-Gk-TUk"/>
@@ -383,7 +383,7 @@
                                     <outlet property="titleLabel" destination="e1Z-9T-9Ry" id="EdG-OC-Ej1"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SpeedCell" id="gvg-1F-2Fh" userLabel="SpeedCell" customClass="SettingsSwitchTableCell" customModule="HotShot" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SpeedCell" id="gvg-1F-2Fh" userLabel="SpeedCell" customClass="SettingsSpeedCell" customModule="HotShot" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="144" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="gvg-1F-2Fh" id="E7T-bc-HUw">
@@ -391,7 +391,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hfQ-Wg-Fo1">
-                                            <rect key="frame" x="15" y="11.5" width="33.5" height="21"/>
+                                            <rect key="frame" x="15" y="12" width="34" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -403,6 +403,9 @@
                                                 <segment title="km/h"/>
                                                 <segment title="m/h"/>
                                             </segments>
+                                            <connections>
+                                                <action selector="unitSwitch:" destination="gvg-1F-2Fh" eventType="valueChanged" id="Mhv-kR-AGR"/>
+                                            </connections>
                                         </segmentedControl>
                                     </subviews>
                                     <color key="backgroundColor" red="0.85490196080000003" green="0.74117647060000003" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -416,7 +419,8 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.85490196080000003" green="0.74117647060000003" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
-                                    <outlet property="titleLabel" destination="hfQ-Wg-Fo1" id="zPJ-15-qWf"/>
+                                    <outlet property="SpeedUnitSelector" destination="KuY-WS-sGo" id="T0N-8u-56M"/>
+                                    <outlet property="titleLabel" destination="hfQ-Wg-Fo1" id="u8V-sc-ghP"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsLogoutCell" id="CGt-Za-xAp" customClass="SettingsLogoutTableCell" customModule="HotShot" customModuleProvider="target">

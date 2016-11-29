@@ -11,6 +11,8 @@ import CameraManager
 import RealmSwift
 import CoreLocation
 
+public var speedMetric = ""
+
 class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var videosButton: UIButton!
@@ -26,7 +28,7 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
 
     
     @IBOutlet weak var speed: UILabel!
-    let speedMetric = "m/s"
+
     var locationManager: CLLocationManager!
     var lat = ""
     var long = ""
@@ -80,24 +82,16 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
     }
 
     func updateSpeed() {
-        if location5?.speed != nil {
+        if speedMetric == "m/h" {
+            speed.text = "\(Double(round(10 * location5.speed / 2.23694)/10))" + " m/h"
+  
+        } else if speedMetric == "km/h" {
+            speed.text = "\(Double(round(10 * location5.speed / 3.6)/10))" + " km/h"
+ 
+        } else {
             speed.text = "\(Double(round(10 * location5.speed)/10))" + " m/s"
+
         }
-        else {
-            speed.text = "00.0 m/s"
-        }
-//        let x = unitSelect.titleForSegment(at: unitSelect.selectedSegmentIndex)!
-//
-//        if x == "mile/hr" {
-//            speed.text = "\(Double(round(10 * location5.speed / 2.23694)/10))"
-//            unit.text = "mile/hr"
-//        } else if x == "km/hr" {
-//            speed.text = "\(Double(round(10 * location5.speed / 3.6)/10))"
-//            unit.text = "km/hr"
-//        } else {
-//            speed.text = "\(Double(round(10 * location5.speed)/10))"
-//            unit.text = "meter/sec"
-//        }
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

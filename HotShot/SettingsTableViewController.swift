@@ -88,7 +88,7 @@ class SettingsTableViewController: UITableViewController {
     }
 
     enum RecordSettings: Int {
-        case video = 0, travelingSpeedUnit, speed, autoRecord
+        case video = 0, speedUnit, speed, autoRecord
 
         static let count: Int = {
             var max = 0
@@ -108,8 +108,8 @@ class SettingsTableViewController: UITableViewController {
                 return CellTypes.standardCell
             case .speed:
                 return CellTypes.switchCell
-            case .travelingSpeedUnit:
-                return CellTypes.standardCell
+            case .speedUnit:
+                return CellTypes.speedCell
             }
         }
 
@@ -212,9 +212,11 @@ class SettingsTableViewController: UITableViewController {
             switchCell.titleLabel.text = "Display Speed"
             switchCell.settingsSwitch.isOn = appDelegate.shouldShowSpeedInfo
             cell = switchCell
-        case (Sections.recording.rawValue, RecordSettings.travelingSpeedUnit.rawValue):
-            cell = self.getCell(cellType: .speedCell)
-            cell.textLabel?.text = "Speed Unit"
+        case (Sections.recording.rawValue, RecordSettings.speedUnit.rawValue):
+            let speedCell = self.getCell(cellType: .speedCell) as! SettingsSpeedCell
+            speedCell.titleLabel.text = "Speed Unit"
+            speedCell.SpeedUnitSelector.selectedSegmentIndex = selectedIndex
+            cell = speedCell
         case (Sections.recording.rawValue, RecordSettings.video.rawValue):
             cell = self.getCell(cellType: .standardCell)
             cell.textLabel?.text = "Video"
@@ -246,13 +248,8 @@ class SettingsTableViewController: UITableViewController {
             }
         case Sections.general.rawValue:
             switch indexPath.row {
-                
-                
             case GeneralSettings.about.rawValue:
                 performSegue(withIdentifier: showAboutSegueIdentifier, sender: self)
-                
-                
-                
             default:
                 return
             }
