@@ -27,25 +27,25 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
     var shouldShowWarning = true
     var isRecording = false
     var shouldSaveSegment = false
+    var isFirstTimeLoad = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.controllView.alpha = 0.75
         self.recordButton.backgroundColor = config.recordGreen
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        tapRecognizer.numberOfTapsRequired = 2
-        tapRecognizer.delegate = self
-        cameraView.addGestureRecognizer(tapRecognizer)
-        
-        if appDelegate.autoRecordAtLaunchIsOn {
-            self.startRecordingButtonPressed(self.recordButton)
-        }
+        let doubleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap))
+        doubleTapRecognizer.numberOfTapsRequired = 2
+        doubleTapRecognizer.delegate = self
+        cameraView.addGestureRecognizer(doubleTapRecognizer)
     }
 
     override func viewDidAppear(_ animated: Bool) {
         if shouldShowWarning {
             displayInitialAlert()
+        }
+        if isFirstTimeLoad && appDelegate.autoRecordAtLaunchIsOn {
+            self.startRecordingButtonPressed(self.recordButton)
         }
     }
 
@@ -59,7 +59,7 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
         // Dispose of any resources that can be recreated.
     }
 
-    @objc func handleTap() {
+    @objc func handleDoubleTap() {
         self.shouldSaveSegment = true
     }
 
