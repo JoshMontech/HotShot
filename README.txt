@@ -1,19 +1,27 @@
-Contributions:
+o Group number, list of team members, and name of project
+Group Number: 6
+Team Members: Josh, Jake, Jerry
+Project Name: HotShot
 
-Jake Mayo (30%)
-* Added About page
-* Added speedometer
+o A list of dependencies (Swift 2 or 3? Xcode 8 or other?
+-Swift 3
+-Xcode 8
+Pods:
+-Realm
+-Firebase
+-CameraManager
 
-Josh Montgomery (30%)
-* Implemented a skip function to bypass login/signup
-* Adapted settings to account for skip function
-* Corrected login and signup issues
+o A table. Each row should contain one major feature of your project. The
+columns of the table are:
+ Short description of feature
+ Release originally planned for deployment (alpha, beta, final)
+ Release actually deployed (alpha, beta, final)
+ Short explanation for deviation (if any)
+ Who worked on what percentage of it
 
-Jerry Pon (40%)
-* Fixed loop recording bug
-* Implemented power saver mode
-* Implemented auto record at launch
-
-Deviations:
-
+Feature | Description | Original Release | Actual Release | Explanation of deviaion | owner(s) 
+ --- | --- | --- | --- | --- | --- 
+a | b | c | d | e | f 
+a | b | c | d | e | f 
+a | b | c | d | e | f 
 
