@@ -64,6 +64,9 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
         guard cameraManager.cameraIsReady else {
             return
         }
+        if appDelegate.powerSavingModeIsOn {
+            UIScreen.main.brightness = CGFloat(0.01)
+        }
         sender.isSelected = !sender.isSelected
         sender.backgroundColor = sender.isSelected ? UIColor.red : config.recordGreen
         if #available(iOS 10.0, *) {
@@ -128,6 +131,9 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
     }
 
     private func stopRecording() {
+        if appDelegate.powerSavingModeIsOn {
+            UIScreen.main.brightness = CGFloat(0.7)
+        }
         cameraManager.stopVideoRecording({ (videoURL, error) -> Void in
             if let errorOccured = error {
                 self.cameraManager.showErrorBlock("Error occurred", errorOccured.localizedDescription)
