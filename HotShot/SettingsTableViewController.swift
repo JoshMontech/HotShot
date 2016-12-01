@@ -121,7 +121,6 @@ class SettingsTableViewController: UITableViewController {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
         userLoggedIn = appDelegate.userLoggedIn!
-        print(userLoggedIn)
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
