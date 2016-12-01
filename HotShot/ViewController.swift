@@ -44,9 +44,6 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
         if shouldShowWarning {
             displayInitialAlert()
         }
-        if isFirstTimeLoad && appDelegate.autoRecordAtLaunchIsOn {
-            self.startRecordingButtonPressed(self.recordButton)
-        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -107,7 +104,11 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
 
     private func displayInitialAlert() {
         let alertController = UIAlertController(title: "Warning", message: warningMessage, preferredStyle: .alert)
-        let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let defaultAction = UIAlertAction(title: "OK", style: .default) { (_) -> Void in
+            if self.isFirstTimeLoad && self.appDelegate.autoRecordAtLaunchIsOn {
+                self.startRecordingButtonPressed(self.recordButton)
+            }
+        }
         alertController.addAction(defaultAction)
         self.present(alertController, animated: true, completion: nil)
 
