@@ -6,10 +6,9 @@ Jake Mayo (30%)
 * Research about adding filters to video
 
 Josh Montgomery (30%)
-* Added Firebase framework
-* Implemented Login/Signup functionality
-* Implemented login/Signup VC flow logic
-* Added logout and account update functionality
+* Implemented a skip function to bypass login/signup
+* Adapted settings to account for skip function
+* Corrected login and signup issues
 
 Jerry Pon (40%)
 * Added new table cells for the Settings view
@@ -18,7 +17,6 @@ Jerry Pon (40%)
 * Added more user defaults for settings and recording options
 
 Deviations:
-Josh: experienced issues when he added Firebase with Cocoapods due to complications in XCode Beta, Swift 3, and Cocoapods update. There was also an issue of git version control in which XCode considered files to be missing, but in reality they weren't. 
 
 Jerry: There’s a minor bug that deletes additional video when recording enters a new loop.
 
