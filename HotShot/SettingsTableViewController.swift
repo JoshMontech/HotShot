@@ -16,14 +16,15 @@ class SettingsTableViewController: UITableViewController {
     let showVideoOptionsSegueIdentifier = "ShowVideoOptionsSegue"
     let showAboutSegueIdentifier = "ShowAboutSegue"
     let config = Config.sharedInstance
-    
-    
+    let speedCellIdentifier = "SpeedCell"
+
+
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
     var userLoggedIn = false
 
     enum CellTypes {
-        case standardCell, switchCell, logoutCell
+        case standardCell, switchCell, logoutCell, speedCell
     }
 
     enum Sections: Int {
@@ -87,7 +88,7 @@ class SettingsTableViewController: UITableViewController {
     }
 
     enum RecordSettings: Int {
-        case video = 0, travelingSpeedUnit, speed, autoRecord
+        case video = 0, speedUnit, speed, autoRecord
 
         static let count: Int = {
             var max = 0
@@ -107,8 +108,8 @@ class SettingsTableViewController: UITableViewController {
                 return CellTypes.standardCell
             case .speed:
                 return CellTypes.switchCell
-            case .travelingSpeedUnit:
-                return CellTypes.standardCell
+            case .speedUnit:
+                return CellTypes.speedCell
             }
         }
 
@@ -207,12 +208,14 @@ class SettingsTableViewController: UITableViewController {
             cell = switchCell
         case (Sections.recording.rawValue, RecordSettings.speed.rawValue):
             let switchCell = self.getCell(cellType: .switchCell) as! SettingsSwitchTableCell
-            switchCell.titleLabel.text = config.settingsDisplaySpeedTitle
-            switchCell.settingsSwitch.isOn = appDelegate.shouldShowSpeedInfo
+            switchCell.titleLabel.text = "Display Speed"
+            switchCell.settingsSwitch.isOn = Bool(showSpeed as NSNumber)
             cell = switchCell
-        case (Sections.recording.rawValue, RecordSettings.travelingSpeedUnit.rawValue):
-            cell = self.getCell(cellType: .standardCell)
-            cell.textLabel?.text = "Speed Unit"
+        case (Sections.recording.rawValue, RecordSettings.speedUnit.rawValue):
+            let speedCell = self.getCell(cellType: .speedCell) as! SettingsSpeedCell
+            speedCell.titleLabel.text = "Speed Unit"
+            speedCell.SpeedUnitSelector.selectedSegmentIndex = selectedIndex
+            cell = speedCell
         case (Sections.recording.rawValue, RecordSettings.video.rawValue):
             cell = self.getCell(cellType: .standardCell)
             cell.textLabel?.text = "Video"
@@ -244,13 +247,8 @@ class SettingsTableViewController: UITableViewController {
             }
         case Sections.general.rawValue:
             switch indexPath.row {
-                
-                
             case GeneralSettings.about.rawValue:
                 performSegue(withIdentifier: showAboutSegueIdentifier, sender: self)
-                
-                
-                
             default:
                 return
             }
@@ -347,6 +345,8 @@ class SettingsTableViewController: UITableViewController {
             return tableView.dequeueReusableCell(withIdentifier: logOutCellIdentifier)!
         case .switchCell:
             return tableView.dequeueReusableCell(withIdentifier: switchCellIdentifier)!
+        case .speedCell:
+            return tableView.dequeueReusableCell(withIdentifier: speedCellIdentifier)!
         }
     }
 }

@@ -11,6 +11,9 @@ import CameraManager
 import RealmSwift
 import CoreLocation
 
+public var speedMetric = ""
+public var showSpeed = 1
+
 class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var videosButton: UIButton!
@@ -23,6 +26,20 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let documentDir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
     let config = Config.sharedInstance
+
+    @IBOutlet weak var speed: UILabel!
+
+    var locationManager: CLLocationManager!
+    var lat = ""
+    var long = ""
+
+    var location5: CLLocation! {
+        didSet {
+            lat = "\(location5.coordinate.latitude)"
+            long = "\(location5.coordinate.longitude)"
+            updateSpeed()
+        }
+    }
 
     var shouldShowWarning = true
     var isRecording = false
@@ -38,12 +55,52 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
         doubleTapRecognizer.numberOfTapsRequired = 2
         doubleTapRecognizer.delegate = self
         cameraView.addGestureRecognizer(doubleTapRecognizer)
+
     }
 
     override func viewDidAppear(_ animated: Bool) {
         if shouldShowWarning {
             displayInitialAlert()
         }
+
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        checkCoreLocationPermission()
+    }
+
+    func checkCoreLocationPermission() {
+        if CLLocationManager.authorizationStatus() == .notDetermined {
+            locationManager.requestWhenInUseAuthorization()
+        } else if CLLocationManager.authorizationStatus() == .restricted {
+            // print alert
+            print("unauthorized to use location service")
+        }
+    }
+
+    @objc func updateSpeed() {
+        if showSpeed == 0 {
+            speed.text = ""
+        } else {
+            locationManager.startUpdatingLocation()
+            if location5 != nil {
+                let currentSpeed = location5.speed == -1.0 ? 0 : location5.speed
+                if speedMetric == "m/h" {
+                    speed.text = "\(Double(round(10 * currentSpeed / 2.23694)/10))" + " m/h"
+
+                } else if speedMetric == "km/h" {
+                    speed.text = "\(Double(round(10 * currentSpeed / 3.6)/10))" + " km/h"
+
+                } else {
+                    speed.text = "\(Double(round(10 * currentSpeed)/10))" + " m/s"
+                }
+            }
+        }
+    }
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        location5 = (locations).last
+        locationManager.stopUpdatingLocation() // save batter
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -61,6 +118,10 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
     }
 
     @IBAction func startRecordingButtonPressed(_ sender: UIButton) {
+        if #available(iOS 10.0, *) {
+            let timerSpeed = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(updateSpeed), userInfo: nil, repeats: true)
+            timerSpeed.fire()
+        }
         guard cameraManager.cameraIsReady else {
             return
         }
@@ -71,9 +132,15 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
         sender.backgroundColor = sender.isSelected ? UIColor.red : config.recordGreen
         if #available(iOS 10.0, *) {
             let timer = Timer.scheduledTimer(timeInterval: 60.0 * appDelegate.clipLength, target: self, selector: #selector(stopAndStartRecording), userInfo: nil, repeats: true)
+
+            // start the timer
+            let timerSpeed = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(updateSpeed), userInfo: nil, repeats: true)
+
+
             // start recording
             if sender.isSelected {
                 timer.fire()
+                timerSpeed.fire()
                 isRecording = true
                 videosButton.isUserInteractionEnabled = false
                 settingsButton.isUserInteractionEnabled = false
@@ -81,6 +148,7 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
             // stop recording
             else {
                 timer.invalidate()
+                timerSpeed.invalidate()
                 stopRecording()
                 isRecording = false
                 videosButton.isUserInteractionEnabled = true
@@ -90,15 +158,19 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
             // Fallback on earlier versions
             // TODO: check if it works on older iOS versions
             let timer = Timer(timeInterval: 60.0 * appDelegate.clipLength, target: self, selector: #selector(stopAndStartRecording), userInfo: nil, repeats: true)
+            // start the timer
+            let timerSpeed = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(updateSpeed), userInfo: nil, repeats: true)
             // start recording
             if sender.isSelected {
                 timer.fire()
+                timerSpeed.fire()
                 isRecording = true
                 videosButton.isUserInteractionEnabled = false
             }
             // stop recording
             else {
                 timer.invalidate()
+                timerSpeed.invalidate()
                 stopRecording()
                 isRecording = false
             }

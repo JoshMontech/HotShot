@@ -23,7 +23,12 @@ class SettingsSwitchTableCell: UITableViewCell {
             appDelegate.autoRecordAtLaunchIsOn = sender.isOn
         } else if title == config.settingsDisplaySpeedTitle {
             appDelegate.shouldShowSpeedInfo = sender.isOn
+            
+            if titleLabel.text == "Display Speed" && showSpeed == 1 {
+                showSpeed = 0
+            } else if titleLabel.text == "Display Speed" && showSpeed == 0 {
+                showSpeed = 1
+            }
         }
     }
-    
 }
