@@ -3,7 +3,7 @@ Group Number: 6
 Team Members: Josh, Jake, Jerry
 Project Name: HotShot
 
-o A list of dependencies (Swift 2 or 3? Xcode 8 or other?
+o A list of dependencies
 -Swift 3
 -Xcode 8
 Pods:
