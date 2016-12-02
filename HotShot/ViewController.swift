@@ -72,9 +72,7 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
     }
 
     func checkCoreLocationPermission() {
-        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            locationManager.startUpdatingLocation()
-        } else if CLLocationManager.authorizationStatus() == .notDetermined {
+        if CLLocationManager.authorizationStatus() == .notDetermined {
             locationManager.requestWhenInUseAuthorization()
         } else if CLLocationManager.authorizationStatus() == .restricted {
             // print alert
@@ -82,18 +80,23 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
         }
     }
 
-    func updateSpeed() {
+    @objc func updateSpeed() {
         if showSpeed == 0 {
             speed.text = ""
-        } else if speedMetric == "m/h" {
-            speed.text = "\(Double(round(10 * location5.speed / 2.23694)/10))" + " m/h"
-  
-        } else if speedMetric == "km/h" {
-            speed.text = "\(Double(round(10 * location5.speed / 3.6)/10))" + " km/h"
- 
         } else {
-            speed.text = "\(Double(round(10 * location5.speed)/10))" + " m/s"
-
+            locationManager.startUpdatingLocation()
+            if location5 != nil {
+                let currentSpeed = location5.speed == -1.0 ? 0 : location5.speed
+                if speedMetric == "m/h" {
+                    speed.text = "\(Double(round(10 * currentSpeed / 2.23694)/10))" + " m/h"
+                    
+                } else if speedMetric == "km/h" {
+                    speed.text = "\(Double(round(10 * currentSpeed / 3.6)/10))" + " km/h"
+                    
+                } else {
+                    speed.text = "\(Double(round(10 * currentSpeed)/10))" + " m/s"
+                }
+            }
         }
     }
 
@@ -117,6 +120,10 @@ class ViewController: UIViewController, FileManagerDelegate, UIGestureRecognizer
     }
 
     @IBAction func startRecordingButtonPressed(_ sender: UIButton) {
+        if #available(iOS 10.0, *) {
+            let timerSpeed = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(updateSpeed), userInfo: nil, repeats: true)
+            timerSpeed.fire()
+        }
         guard cameraManager.cameraIsReady else {
             return
         }
